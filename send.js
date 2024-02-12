@@ -151,7 +151,7 @@ function cutMess(linesArr, messType) {
       linesArr[i] = linesArr[i].replace("fullNameOfGuest", currPerson.name);
     }
     if (linesArr[i].includes("nameOfChain")) {
-      linesArr[i] = linesArr[i].replace("nameOfChain", currPerson.chain);
+      linesArr[i] = linesArr[i].replace("nameOfChain", fixChainFromData(currPerson.chain));
     }
     if (linesArr[i].includes("linkclip1")) {
       linesArr[i] = linesArr[i].replace("linkclip1", currPerson.clip1);
@@ -357,3 +357,4 @@ function whatsAppMes(id) {
     encodeURI(fullTexts[whichMes - 1]);
   window.open(link, "_blank");
 }
+
