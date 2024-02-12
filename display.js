@@ -63,7 +63,7 @@ function submitData() {
       document.getElementById("nameDisplay").innerHTML =
         "שם מלא: " + allPeople[i].name;
       document.getElementById("chainDisplay").innerHTML =
-        "שם השרשרת: " + allPeople[i].chain;
+        "שם השרשרת: " + fixChainFromData(allPeople[i].chain);
       document.getElementById("phoneDisplay").innerHTML =
         "נייד: " + allPeople[i].phone;
       document.getElementById("emailDisplay").innerHTML =
