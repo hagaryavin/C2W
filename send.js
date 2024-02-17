@@ -22,8 +22,20 @@ var messes = [
   { name: "", lines: [] },
   { name: "", lines: [] },
   { name: "", lines: [] },
+{ name: "", lines: [] },
+  { name: "", lines: [] },
+  { name: "", lines: [] },
+  { name: "", lines: [] },
+  { name: "", lines: [] },
+  { name: "", lines: [] },
+  { name: "", lines: [] },
+  { name: "", lines: [] },
+    { name: "", lines: [] },
+  { name: "", lines: [] },
+  { name: "", lines: [] },
+  { name: "", lines: [] }
 ];
-var fullTexts = [[], [], [], [], [], [], [], []];
+var fullTexts = [[], [], [], [], [], [], [], [],[], [], [], [], [], [], [], [], [], [], [], []];
 var crewDataURL =
   "https://script.google.com/macros/s/AKfycbz7IgSM1Rhei0PPSgEHwxD_YHtyevYhZt32Mje9asUeGE20_J8a59XYw0xNFJMxjDKXKA/exec";
 getCrewData();
@@ -41,6 +53,10 @@ function getData() {
           chain: ele.chain,
           clip1: ele.clip1,
           clip2: ele.clip2,
+            clip3: ele.clip3,
+          clip4: ele.clip4,
+            clip5: ele.clip5,
+          clip6: ele.clip6,
           row: rowCount,
         };
         if (ele.fixedname !== "") newPerson.name = ele.fixedname;
@@ -117,13 +133,13 @@ function getMessData() {
             ele.line20,
           ],
         };
-        for (var i = 1; i <= 8; i++) {
+        for (var i = 1; i <= 20; i++) {
           if (newMess.name.includes("משלוח קליפים " + i)) {
             messes[i - 1] = newMess;
           }
         }
       });
-      for (var i = 0; i <= 7; i++) {
+      for (var i = 0; i <= 19; i++) {
         for (var j = 0; j < messes[i].lines.length; j++) {
           cutMess(messes[i].lines, i + 1);
         }
@@ -158,6 +174,18 @@ function cutMess(linesArr, messType) {
     }
     if (linesArr[i].includes("linkclip2")) {
       linesArr[i] = linesArr[i].replace("linkclip2", currPerson.clip2);
+    }
+     if (linesArr[i].includes("linkclip3")) {
+      linesArr[i] = linesArr[i].replace("linkclip3", currPerson.clip3);
+    }
+    if (linesArr[i].includes("linkclip4")) {
+      linesArr[i] = linesArr[i].replace("linkclip4", currPerson.clip4);
+    }
+     if (linesArr[i].includes("linkclip5")) {
+      linesArr[i] = linesArr[i].replace("linkclip5", currPerson.clip5);
+    }
+    if (linesArr[i].includes("linkclip6")) {
+      linesArr[i] = linesArr[i].replace("linkclip6", currPerson.clip6);
     }
     if (linesArr[i].includes("crewName")) {
       linesArr[i] = linesArr[i].replace("crewName", crewMem);
@@ -244,6 +272,7 @@ function submitData() {
       fixChainFromData(allPeople[i].chain) === nameAndChain[1]
     ) {
       currPerson = allPeople[i];
+        document.getElementById("nameB4").innerHTML = allPeople[i].name;
       document.getElementById("guestPhone").value = fixPhoneDataGuest(
         allPeople[i].phone
       );
