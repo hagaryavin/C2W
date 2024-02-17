@@ -7,7 +7,7 @@ var chosenCol = "";
 var chosenRow = 0;
 var newPerson = {};
 const url =
-  "https://script.google.com/macros/s/AKfycbzgSi44PK_EEUpjWn9dzVs_aWQcr0CRoUdQPKSEOk1M39EalLpSal6lHQeEP0PE0uc_uA/exec";
+  "https://script.google.com/macros/s/AKfycbzojs9dIr-pr54z2zCEXxklX5h1wIRBHt1ktH8Wwg9KC62R4iDaaCftIK7rHJzrjC3nVQ/exec";
 getData();
 function getData() {
   fetch(url)
@@ -21,6 +21,10 @@ function getData() {
           chain: ele.chain,
           clip1: ele.clip1,
           clip2: ele.clip2,
+        clip3: ele.clip3,
+          clip4: ele.clip4,
+            clip5: ele.clip5,
+          clip6: ele.clip6,
           row: rowCount,
         };
         if (ele.fixedname !== "") newPerson.name = ele.fixedname;
@@ -49,6 +53,10 @@ function reset() {
 function clearValues() {
   document.getElementById("clip1").value = "";
   document.getElementById("clip2").value = "";
+document.getElementById("clip3").value = "";
+  document.getElementById("clip4").value = "";
+    document.getElementById("clip5").value = "";
+  document.getElementById("clip6").value = "";
   document.getElementById("nameB4").innerHTML = "";
 }
 function submitData() {
@@ -63,45 +71,59 @@ function submitData() {
       document.getElementById("nameB4").innerHTML = allPeople[i].name;
       document.getElementById("clip1B4").innerHTML = allPeople[i].clip1;
       document.getElementById("clip2B4").innerHTML = allPeople[i].clip2;
+        document.getElementById("clip3B4").innerHTML = allPeople[i].clip3;
+      document.getElementById("clip4B4").innerHTML = allPeople[i].clip4; 
+        document.getElementById("clip5B4").innerHTML = allPeople[i].clip5;
+      document.getElementById("clip6B4").innerHTML = allPeople[i].clip6;
       console.log("row:" + chosenRow);
     }
   }
 }
-function changeClip1() {
-  chosenCol = "clip1";
+function change(id) {
+    var textEntered="";
+    var dataElement;
+    if(id==="1"){
+        chosenCol = "clip1";
+        textEntered=document.getElementById("clip1").value;
+        dataElement=document.getElementById("clip1");
+    }
+   if(id==="2"){
+        chosenCol = "clip2";
+        textEntered=document.getElementById("clip2").value;
+        dataElement=document.getElementById("clip2");
+    }
+     if(id==="3"){
+        chosenCol = "clip3";
+        textEntered=document.getElementById("clip3").value;
+        dataElement=document.getElementById("clip3");
+    }
+   if(id==="4"){
+        chosenCol = "clip4";
+        textEntered=document.getElementById("clip4").value;
+        dataElement=document.getElementById("clip4");
+    }
+ if(id==="5"){
+        chosenCol = "clip5";
+        textEntered=document.getElementById("clip5").value;
+        dataElement=document.getElementById("clip5");
+    }
+   if(id==="6"){
+        chosenCol = "clip6";
+        textEntered=document.getElementById("clip6").value;
+        dataElement=document.getElementById("clip6");
+    }
   console.log("col: " + chosenCol);
   if (chosenRow === 0) {
     alert("נא לבחור מישהו מהטבלה כדי לשנות");
   }
   const temp = {
-    text: document.getElementById("clip1").value,
+    text: textEntered,
     row: chosenRow,
     col: chosenCol,
   };
   if (chosenRow > 0) {
-    sendData(temp, document.getElementById("clip1"));
+    sendData(temp, dataElement);
   }
-}
-function clip1Change() {
-  changeClip1();
-}
-function changeClip2() {
-  chosenCol = "clip2";
-  console.log("col: " + chosenCol);
-  if (chosenRow === 0) {
-    alert("נא לבחור מישהו מהטבלה כדי לשנות");
-  }
-  const temp = {
-    text: document.getElementById("clip2").value,
-    row: chosenRow,
-    col: chosenCol,
-  };
-  if (chosenRow > 0) {
-    sendData(temp, document.getElementById("clip2"));
-  }
-}
-function clip2Change() {
-  changeClip2();
 }
 function sendData(obj, ele) {
   console.log(obj);
@@ -120,7 +142,7 @@ function sendData(obj, ele) {
       console.log(obj);
       console.log(json);
     });
-  alert("בוצע שינוי! ניתן לראות את השינוי בCRM");
+  
 }
 function fixChainFromData(chain) {
   var splittedChain; //
