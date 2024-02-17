@@ -26,6 +26,10 @@ function getData() {
           order: ele.order,
           clip1: ele.clip1,
           clip2: ele.clip2,
+            clip3: ele.clip3,
+          clip4: ele.clip4,
+            clip5: ele.clip5,
+          clip6: ele.clip6
         };
         if (ele.fixedname !== "") newPerson.name = ele.fixedname;
         if (ele.fixedphone !== "") newPerson.phone = ele.fixedphone;
@@ -74,6 +78,14 @@ function submitData() {
          allPeople[i].clip1;
       document.getElementById("clip2Display").innerHTML =
          allPeople[i].clip2;
+    document.getElementById("clip3Display").innerHTML =
+         allPeople[i].clip3;
+      document.getElementById("clip4Display").innerHTML =
+         allPeople[i].clip4;
+        document.getElementById("clip5Display").innerHTML =
+         allPeople[i].clip5;
+      document.getElementById("clip6Display").innerHTML =
+         allPeople[i].clip6;
       document.getElementById("555Display").innerHTML =
         allPeople[i].link555;
       document.getElementById("55Display").innerHTML =
@@ -134,6 +146,18 @@ function copy(id) {
   }
   if (id === "clip2") {
     text = currPerson.clip2;
+  }
+     if (id === "clip3") {
+    text = currPerson.clip3;
+  }
+  if (id === "clip4") {
+    text = currPerson.clip4;
+  }
+     if (id === "clip5") {
+    text = currPerson.clip5;
+  }
+  if (id === "clip6") {
+    text = currPerson.clip6;
   }
   var elem = document.createElement("textarea");
   document.body.appendChild(elem);
