@@ -61,25 +61,25 @@ function submitData() {
       console.log("row num:" + allPeople[i].row);
       currPerson = allPeople[i];
       document.getElementById("nameDisplay").innerHTML =
-        "שם מלא: " + allPeople[i].name;
+        allPeople[i].name;
       document.getElementById("chainDisplay").innerHTML =
-        "שם השרשרת: " + fixChainFromData(allPeople[i].chain);
+          fixChainFromData(allPeople[i].chain);
       document.getElementById("phoneDisplay").innerHTML =
-        "נייד: " + allPeople[i].phone;
+         allPeople[i].phone;
       document.getElementById("emailDisplay").innerHTML =
-        "מייל: " + allPeople[i].email;
+         allPeople[i].email;
       document.getElementById("orderDisplay").innerHTML =
-        "מס' חרוז: " + allPeople[i].order;
+         allPeople[i].order;
       document.getElementById("clip1Display").innerHTML =
-        "קליפ1: " + allPeople[i].clip1;
+         allPeople[i].clip1;
       document.getElementById("clip2Display").innerHTML =
-        "קליפ2: " + allPeople[i].clip2;
+         allPeople[i].clip2;
       document.getElementById("555Display").innerHTML =
-        "סרט5:55: " + allPeople[i].link555;
+        allPeople[i].link555;
       document.getElementById("55Display").innerHTML =
-        "סרט55: " + allPeople[i].link55yt;
+        allPeople[i].link55yt;
       document.getElementById("fullDisplay").innerHTML =
-        "הראיון: " + allPeople[i].linkfull;
+         allPeople[i].linkfull;
     }
   }
 }
@@ -103,36 +103,36 @@ setTimeout(() => {
 function reset() {
   document.location.reload();
 }
-function copy() {
+function copy(id) {
   var text = "";
-  if (document.getElementById("detail").value === "name") {
+  if (id === "name") {
     text = currPerson.name;
   }
-  if (document.getElementById("detail").value === "chain") {
-    text = currPerson.chain;
+  if (id === "chain") {
+    text =  fixChainFromData(currPerson.chain);
   }
-  if (document.getElementById("detail").value === "order") {
+  if (id === "order") {
     text = currPerson.order;
   }
-  if (document.getElementById("detail").value === "phone") {
+  if (id === "phone") {
     text = currPerson.phone;
   }
-  if (document.getElementById("detail").value === "email") {
+  if (id === "email") {
     text = currPerson.email;
   }
-  if (document.getElementById("detail").value === "link555") {
+  if (id === "link555") {
     text = currPerson.link555;
   }
-  if (document.getElementById("detail").value === "link55yt") {
+  if (id === "link55yt") {
     text = currPerson.link55yt;
   }
-  if (document.getElementById("detail").value === "linkfull") {
+  if (id === "linkfull") {
     text = currPerson.linkfull;
   }
-  if (document.getElementById("detail").value === "clip1") {
+  if (id === "clip1") {
     text = currPerson.clip1;
   }
-  if (document.getElementById("detail").value === "clip2") {
+  if (id === "clip2") {
     text = currPerson.clip2;
   }
   var elem = document.createElement("textarea");
