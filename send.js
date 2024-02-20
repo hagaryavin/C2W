@@ -124,7 +124,7 @@ function getMessData() {
           ],
         };
         for (var i = 1; i <= 10; i++) {
-          if (newMess.name.includes("משלוח קליפים " + i)) {
+          if (newMess.name===("משלוח קליפים " + i)) {
             messes[i - 1] = newMess;
           }
         }
