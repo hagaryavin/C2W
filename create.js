@@ -58,6 +58,9 @@ document.getElementById("clip3").value = "";
     document.getElementById("clip5").value = "";
   document.getElementById("clip6").value = "";
   document.getElementById("nameB4").innerHTML = "";
+    for(var i=1;i<=6;i++){
+    document.getElementById("clip"+i+"Change").innerHTML="הוספת קליפ"+i;
+    }
 }
 function submitData() {
   clearValues();
@@ -85,32 +88,32 @@ function change(id) {
     if(id==="1"){
         chosenCol = "clip1";
         textEntered=document.getElementById("clip1").value;
-        dataElement=document.getElementById("clip1");
+        dataElement=document.getElementById("clip1Change");
     }
    if(id==="2"){
         chosenCol = "clip2";
         textEntered=document.getElementById("clip2").value;
-        dataElement=document.getElementById("clip2");
+        dataElement=document.getElementById("clip2Change");
     }
      if(id==="3"){
         chosenCol = "clip3";
         textEntered=document.getElementById("clip3").value;
-        dataElement=document.getElementById("clip3");
+        dataElement=document.getElementById("clip3Change");
     }
    if(id==="4"){
         chosenCol = "clip4";
         textEntered=document.getElementById("clip4").value;
-        dataElement=document.getElementById("clip4");
+        dataElement=document.getElementById("clip4Change");
     }
  if(id==="5"){
         chosenCol = "clip5";
         textEntered=document.getElementById("clip5").value;
-        dataElement=document.getElementById("clip5");
+        dataElement=document.getElementById("clip5Change");
     }
    if(id==="6"){
         chosenCol = "clip6";
         textEntered=document.getElementById("clip6").value;
-        dataElement=document.getElementById("clip6");
+        dataElement=document.getElementById("clip6Change");
     }
   console.log("col: " + chosenCol);
   if (chosenRow === 0) {
@@ -123,6 +126,7 @@ function change(id) {
   };
   if (chosenRow > 0) {
     sendData(temp, dataElement);
+      dataElement.innerHTML="התעדכן";
   }
 }
 function sendData(obj, ele) {
