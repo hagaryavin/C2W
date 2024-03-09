@@ -104,7 +104,7 @@
                   <button
       onclick="copy('name')"
       class="btn form-control btn-outline-secondary"
-      id="copy"
+      id="nameCopy"
     >להעתיק
   </button>
               </td> 
@@ -113,8 +113,8 @@
               <td id="chainDisplay"></td>
               <td>             <button
                       onclick="copy('chain')"
-                      class="btn form-control btn-outline-secondary"
-                      id="copy"
+                      class="btn form-control btn-outline-secondary copycat"
+                      id="chainCopy"
                     >להעתיק
                   </button>
                  </td>
@@ -124,8 +124,8 @@
                   <td id="orderDisplay"></td>
                    <td>          <button
                           onclick="copy('order')"
-                          class="btn form-control btn-outline-secondary"
-                          id="copy"
+                          class="btn form-control btn-outline-secondary copycat"
+                          id="orderCopy"
                         >להעתיק
                       </button>
                   </td> 
@@ -135,8 +135,8 @@
               <td id="phoneDisplay"></td>
               <td>            <button
                       onclick="copy('phone')"
-                      class="btn form-control btn-outline-secondary"
-                      id="copy"
+                      class="btn form-control btn-outline-secondary copycat"
+                      id="phoneCopy"
                     >להעתיק
                   </button>
                  </td>
@@ -147,7 +147,7 @@
               <td>          <button
       onclick="copy('email')"
       class="btn form-control btn-outline-secondary"
-      id="copy"
+      id="emailCopy"
     >להעתיק
   </button>
                 </td>  
@@ -158,8 +158,8 @@
               <td id="555Display"></td>
                <td>           <button
                       onclick="copy('link555')"
-                      class="btn form-control btn-outline-secondary"
-                      id="copy"
+                      class="btn form-control btn-outline-secondary copycat"
+                      id="link555Copy"
                     >להעתיק
                   </button>
                 </td>  
@@ -171,8 +171,8 @@
              
                 <td>      <button
                       onclick="copy('linkfull')"
-                      class="btn form-control btn-outline-secondary"
-                      id="copy"
+                      class="btn form-control btn-outline-secondary copycat"
+                      id="linkfullCopy"
                     >להעתיק
                   </button>
                 </td> 
@@ -183,8 +183,8 @@
                 <td id="55Display"></td>
                 <td>           <button
                   onclick="copy('link55yt')"
-                  class="btn form-control btn-outline-secondary"
-                  id="copy"
+                  class="btn form-control btn-outline-secondary copycat"
+                  id="link55ytCopy"
                 >להעתיק
               </button>     
            </td> 
@@ -195,9 +195,26 @@
                <td id="clip1Display"></td>
                      <td>    <button
                       onclick="copy('clip1')"
-                      class="btn form-control btn-outline-secondary"
-                      id="copy"
+                      class="btn form-control btn-outline-secondary copycat"
+                      id="clip1Copy"
                     >להעתיק</button>
+                </td>
+                <td id="clip1dateB4">נשלח בתאריך</td>
+                <td>
+                 <input
+                      type="text"
+                      id="clip1date"
+                      
+                      autocomplete="off"
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary"
+                      id="clip1dateChange"
+                      onclick="change('clip1date')"
+                    >
+                      לעדכן תאריך שליחה
+                    </button>
                 </td>
              </tr>
                
@@ -207,10 +224,27 @@
               <td id="clip2Display"></td>
                  <td>      <button
                       onclick="copy('clip2')"
-                      class="btn form-control btn-outline-secondary"
-                      id="copy"
+                      class="btn form-control btn-outline-secondary copycat"
+                      id="clip2Copy"
                     >להעתיק
                   </button>
+                </td>
+                   <td id="clip2dateB4">נשלח בתאריך</td>
+                <td>
+                 <input
+                      type="text"
+                      id="clip2date"
+                      
+                      autocomplete="off"
+                    />
+                    <button
+                      type="button"
+                      class="btn btn-outline-secondary"
+                      id="clip2dateChange"
+                      onclick="change('clip2date')"
+                    >
+                      לעדכן תאריך שליחה
+                    </button>
                 </td>
             </tr>
               <tr>
@@ -219,8 +253,8 @@
                <td id="clip3Display"></td>
                      <td>    <button
                       onclick="copy('clip3')"
-                      class="btn form-control btn-outline-secondary"
-                      id="copy"
+                      class="btn form-control btn-outline-secondary copycat"
+                      id="clip3Copy"
                     >להעתיק</button>
                 </td>
              </tr>
@@ -231,8 +265,8 @@
               <td id="clip4Display"></td>
                  <td>      <button
                       onclick="copy('clip4')"
-                      class="btn form-control btn-outline-secondary"
-                      id="copy"
+                      class="btn form-control btn-outline-secondary copycat"
+                      id="clip4Copy"
                     >להעתיק
                   </button>
                 </td>
@@ -243,8 +277,8 @@
                <td id="clip5Display"></td>
                      <td>    <button
                       onclick="copy('clip5')"
-                      class="btn form-control btn-outline-secondary"
-                      id="copy"
+                      class="btn form-control btn-outline-secondary copycat"
+                      id="clip5Copy"
                     >להעתיק</button>
                 </td>
              </tr>
@@ -255,8 +289,8 @@
               <td id="clip6Display"></td>
                  <td>      <button
                       onclick="copy('clip6')"
-                      class="btn form-control btn-outline-secondary"
-                      id="copy"
+                      class="btn form-control btn-outline-secondary copycat"
+                      id="clip6Copy"
                     >להעתיק
                   </button>
                 </td>
