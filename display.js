@@ -3,9 +3,16 @@ var personOption;
 var allPeople = [];
 var rowCount = 2;
 var currPerson = {};
+var copyBtns=document.getElementsByClassName("copycat");
 var size = 0;
+var ChosenCol=0;
+const date = new Date();
+var day = date.getDate();
+var month = date.getMonth() + 1;
+document.getElementById("clip1date").value= day + "." + month;
+document.getElementById("clip2date").value= day + "." + month;
 const url =
-  "https://script.google.com/macros/s/AKfycbw_2VmXLs1pJKLZElcT2Tp0tR6tPVRf4UWKfS22_n-F_DSEI2dF2zrsQrQ6If6P4mEaGg/exec";
+  "https://script.google.com/macros/s/AKfycbyFwIMPmjK10MhyCpeKLeeZFIU4LplB0xtvS7Ax8b9z7rDxPS660iOv96yfp9PdRG3wwA/exec";
 getData();
 function getData() {
   fetch(url)
@@ -29,7 +36,9 @@ function getData() {
             clip3: ele.clip3,
           clip4: ele.clip4,
             clip5: ele.clip5,
-          clip6: ele.clip6
+          clip6: ele.clip6,
+            clip1date:ele.clip1date,
+            clip2date:ele.clip2date
         };
         if (ele.fixedname !== "") newPerson.name = ele.fixedname;
         if (ele.fixedphone !== "") newPerson.phone = ele.fixedphone;
@@ -55,6 +64,12 @@ function getData() {
 }
 function submitData() {
   document.getElementById("displaying").style.visibility = "hidden";
+    for(var j=0;j<copyBtns.length;j++){
+        copyBtns[j].innerHTML="להעתיק";
+        }
+    document.getElementById("clip1dateChange").innerHTML="לעדכן תאריך שליחה";
+    document.getElementById("clip2dateChange").innerHTML="לעדכן תאריך שליחה";
+    
   for (var i = 0; i < allPeople.length; i++) {
     var nameAndChain = document.getElementById("peopleList").value.split(" + ");
     if (
@@ -92,6 +107,17 @@ function submitData() {
         allPeople[i].link55yt;
       document.getElementById("fullDisplay").innerHTML =
          allPeople[i].linkfull;
+      document.getElementById("clip1dateB4").innerHTML=allPeople[i].clip1date;
+        document.getElementById("clip2dateB4").innerHTML=allPeople[i].clip2date;
+        if(allPeople[i].clip1date==="")
+            {
+               document.getElementById("clip1dateB4").innerHTML="אין תאריך משלוח"; 
+            }
+        if(allPeople[i].clip2date==="")
+            {
+               document.getElementById("clip2dateB4").innerHTML="אין תאריך משלוח"; 
+            }
+      chosenRow=allPeople[i].row;   
     }
   }
 }
@@ -165,5 +191,42 @@ function copy(id) {
   elem.select();
   document.execCommand("copy");
   document.body.removeChild(elem);
-  alert("הטקסט הועתק!");
+  document.getElementById(id+"Copy").innerHTML="הועתק";
+}
+function change(id) {
+    var textEntered=document.getElementById(id).value;
+    var dataElement=document.getElementById(id+"Change");
+    chosenCol=id;
+      console.log("col: " + chosenCol);
+  if (chosenRow === 0) {
+    alert("נא לבחור מישהו מהטבלה כדי לשנות");
+  }
+  const temp = {
+    text: textEntered,
+    row: chosenRow,
+    col: chosenCol,
+  };
+  if (chosenRow > 0) {
+    sendData(temp, dataElement);
+      dataElement.innerHTML="תאריך השליחה התעדכן";
+  }
+}
+function sendData(obj, ele) {
+  console.log(obj);
+  let formData = new FormData();
+  formData.append("data", JSON.stringify(obj));
+  console.log(obj);
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((rep) => {
+      console.log(obj);
+      return rep.json();
+    })
+    .then((json) => {
+      console.log(obj);
+      console.log(json);
+    });
+  
 }
