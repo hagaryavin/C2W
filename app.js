@@ -53,6 +53,7 @@ function getData() {
           day = newPerson.recordingdate.getDate();
           month = newPerson.recordingdate.getMonth() + 1;
           recDate = day + "." + month;
+
           if (
             (newPerson.clipscreatedate < today ||
               (newPerson.clipscreatedate.getDate() === today.getDate() &&
@@ -65,8 +66,9 @@ function getData() {
               name: newPerson.name,
               recordingdate: newPerson.recordingdate,
               type: "clipscreate",
-              row: newPerson.row,
+              row: newPerson.row
             };
+
             if (!taskAlreadyExist(newTask)) {
               console.log("new task!");
               console.log(newTask);
@@ -77,9 +79,11 @@ function getData() {
           console.log(newPerson);
           allPeople.push(newPerson);
         }
+        
       });
       taskData();
     });
+    
 }
 
 function getTasksDataFromPerson() {
@@ -102,7 +106,7 @@ function getTasksDataFromPersonCont(row, type) {
   for (var i = 0; i < tasks4lols.length; i++) {
     if (row === tasks4lols[i].row) {
       if (type === "clipscreate") {
-        result = tasks4lols[i].clipscreate;
+        result = tasks4lols[i].clipscreatestatus;
       }
     }
   }
@@ -134,13 +138,17 @@ function taskData() {
           }
         }
       });
+      
       if (allTasks.length > 0) {
         createTasks();
       }
       console.log(size);
       optionList = document.createElement("dt");
       optionList.id = "label";
-      optionList.innerHTML = "מומלץ לבדוק גם בלוח השנה";
+      
+      if(allTasks.length===0){
+        optionList.innerHTML = "אין הקלטות חדשות ליצור מהן קליפים";
+      }
       list.append(optionList);
     });
 }
@@ -180,6 +188,7 @@ setTimeout(() => {
   loader.style.display = "none";
 }, 2050);
 function taskAlreadyExist(task) {
+   
   for (var i = 0; i < allTasks.length; i++) {
     if (allTasks[i].row === task.row && allTasks[i].type === task.type)
       return true;
