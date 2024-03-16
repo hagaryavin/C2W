@@ -1,6 +1,6 @@
 var newPerson = {};
 var size = 0;
-var allPeople = [];
+var allPeople = []; 
 var list = document.getElementById("list");
 var optionList;
 var optionDiv;
