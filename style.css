@@ -10,6 +10,9 @@
 #clipsSend {
   visibility: hidden;
 }
+#live {
+  visibility: hidden;
+}
 #displaying {
   visibility: hidden;
 }
