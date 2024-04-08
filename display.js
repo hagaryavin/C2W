@@ -208,7 +208,7 @@ function change(id) {
   };
   if (chosenRow > 0) {
     sendData(temp, dataElement);
-      dataElement.innerHTML="תאריך השליחה התעדכן";
+      dataElement.innerHTML="תאריך השליחה עודכן";
   }
 }
 function sendData(obj, ele) {
