@@ -175,7 +175,7 @@ function createTasks() {
         optionBut.innerHTML="להעתיק";
         optionBut.classList.add("btn");
         //optionBut.classList.add("form-control");
-        optionBut.classList.add("btn-outline-secondary");
+        optionBut.classList.add("btn-light");
          optionBut.id = tasksPerson.link+"Copy"+allTasks[i].row;;
         optionBut.addEventListener("click", function () {
         copy(this);
@@ -190,7 +190,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "clipscreate" + allTasks[i].row;
-      optionList.innerHTML = allTasks[i].name + " - " + recDate +" - "+tasksPerson.link;
+      optionList.innerHTML = allTasks[i].name + " - " + recDate +" - "+tasksPerson.link+" - ";
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
         optionDiv.append(optionBut);
