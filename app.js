@@ -1,6 +1,6 @@
 var newPerson = {};
 var size = 0;
-var allPeople = []; 
+var allPeople = [];
 var list = document.getElementById("list");
 var optionList;
 var optionDiv;
@@ -38,9 +38,13 @@ function getData() {
           name: ele.name,
           recordingdate: "",
           clipscreatedate: "",
+          link: ele.linkfull,
           row: tableRow,
         };
         tableRow++;
+        if(ele.linkfull===""){
+            newPerson.link=ele.linkfive;
+        }
         if (ele.fixedname !== "") newPerson.name = ele.fixedname;
         if (ele.recordingdate !== "")
           newPerson.recordingdate = new Date(ele.recordingdate);
@@ -66,6 +70,7 @@ function getData() {
               name: newPerson.name,
               recordingdate: newPerson.recordingdate,
               type: "clipscreate",
+                link:newPerson.link,
               row: newPerson.row
             };
 
@@ -174,7 +179,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "clipscreate" + allTasks[i].row;
-      optionList.innerHTML = allTasks[i].name + " - " + recDate;
+      optionList.innerHTML = allTasks[i].name + " - " + recDate +" - "+tasksPerson.link;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       list.append(optionDiv);
