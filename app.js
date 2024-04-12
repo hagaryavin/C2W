@@ -4,6 +4,7 @@ var allPeople = [];
 var list = document.getElementById("list");
 var optionList;
 var optionDiv;
+var optionBut;
 var optionInput;
 var day;
 var month;
@@ -170,9 +171,19 @@ function createTasks() {
       optionDiv.classList.add("d-inline-flex");
       optionDiv.classList.add("flex-row");
       optionInput = document.createElement("input");
+    optionBut=document.createElement("button");
+        optionBut.innerHTML="להעתיק";
+        optionBut.classList.add("btn");
+        //optionBut.classList.add("form-control");
+        optionBut.classList.add("btn-outline-secondary");
+         optionBut.id = tasksPerson.link+"Copy"+allTasks[i].row;;
+        optionBut.addEventListener("click", function () {
+        copy(this);
+      });
       optionInput.id = allTasks[i].row + "Checkclipscreate";
       optionInput.type = "checkbox";
       optionInput.classList.add("form-check-input");
+        
       optionInput.addEventListener("click", function () {
         check(this);
       });
@@ -182,6 +193,7 @@ function createTasks() {
       optionList.innerHTML = allTasks[i].name + " - " + recDate +" - "+tasksPerson.link;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
+        optionDiv.append(optionBut);
       list.append(optionDiv);
       list.append(document.createElement("br"));
       size++;
@@ -199,6 +211,18 @@ function taskAlreadyExist(task) {
       return true;
   }
   return false;
+}
+function copy(ele){
+    var splitId = ele.id.split("Copy");
+  var text = splitId[0];
+     var elem = document.createElement("textarea");
+  document.body.appendChild(elem);
+  elem.value = text;
+  elem.select();
+  document.execCommand("copy");
+  document.body.removeChild(elem);
+  document.getElementById(ele.id).innerHTML="הועתק";
+    
 }
 function check(ele) {
   var splitId = ele.id.split("Check");
