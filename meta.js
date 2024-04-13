@@ -2,7 +2,7 @@ var allPeople = [];
 var rowCount = 2;
 var size = 0;
 const url =
-  "https://script.google.com/macros/s/AKfycbw_2VmXLs1pJKLZElcT2Tp0tR6tPVRf4UWKfS22_n-F_DSEI2dF2zrsQrQ6If6P4mEaGg/exec";
+  "https://script.google.com/macros/s/AKfycbzXoN1d21aGDuS7dUEj9vz6v952hwbKmueQaPdJ20QbrDkH9X6485Vh2IxnYgTbVBR7kA/exec";
 var newPerson = {};
 var currPerson = [[],[],[],[]];
 var messes = [
@@ -36,7 +36,9 @@ function getData() {
             id:ele.id,
             clip1:ele.clip1,
             clip2:ele.clip2,
-             row: rowCount,
+            meta:ele.meta,
+             row: rowCount
+            
         };
         if (ele.fixedname !== "") newPerson.name = ele.fixedname;
         if (ele.fixedtopicofstory !== "")
@@ -48,7 +50,7 @@ function getData() {
           if (ele.chainthree !== "") newPerson.chain = ele.chainthree;
         }
         if (ele.fixedchain !== "") newPerson.chain = ele.fixedchain;
-          if(newPerson.id!==""){
+          if(newPerson.id!==""&&newPerson.meta!=="v"){
             allPeople.push(newPerson);
             console.log(allPeople[size]);
               allIds.push(newPerson.id);
@@ -62,9 +64,17 @@ function getData() {
           }
           rowCount++;
       });
-          console.log("ids:"+allIds.length+" idswclips:"+allIdsWithClips.length+" idswfull:"+allIdsWithFull.length);
-
+        
+      console.log("ids:"+allIds.length+" idswclips:"+allIdsWithClips.length+" idswfull:"+allIdsWithFull.length);
+      if(allIds.length<4||allIdsWithClips.length<4||allIdsWithFull.length<4){
+          clearList();
+      }else{
+        submitData();
+      }
     });
+}
+function reset() {
+  document.location.reload();
 }
 function getMessData() {
   var newMess;
@@ -123,6 +133,10 @@ function getMessData() {
     });
   
 }
+setTimeout(() => {
+  const loader = document.getElementById("loader");
+  loader.style.display = "none";
+}, 5050);
 function cutMess(linesArr, messType,personNum) {
   var currText = "";
   var testDiv = document.getElementById("text" + messType);
@@ -216,19 +230,32 @@ function submitData() {
         document.getElementById(i+"Copy").innerHTML="העתקת פוסט";
     }
 document.getElementById("meta").style.visibility = "hidden";
-    
-    var pickedIds=[allIdsWithClips[Math.floor(Math.random()*allIdsWithClips.length)],
-                   allIdsWithFull[Math.floor(Math.random()*allIdsWithFull.length)],
-                  allIds[Math.floor(Math.random()*allIds.length)],
-                   allIdsWithClips[Math.floor(Math.random()*allIdsWithClips.length)]
-                  ];
+    var num1=allIdsWithClips[Math.floor(Math.random()*allIdsWithClips.length)];
+    var num2=allIdsWithFull[Math.floor(Math.random()*allIdsWithFull.length)];
+    while(num1===num2){
+        num2=allIdsWithFull[Math.floor(Math.random()*allIdsWithFull.length)];
+    }
+    var num3=allIds[Math.floor(Math.random()*allIds.length)];
+    while(num3===num1||num3===num2){
+        num3=allIds[Math.floor(Math.random()*allIds.length)];
+    }
+    var num4=allIdsWithClips[Math.floor(Math.random()*allIdsWithClips.length)];
+    while(num4===num3||num4===num2||num4===num1){
+        num4=allIdsWithClips[Math.floor(Math.random()*allIdsWithClips.length)]
+    }
+    var pickedIds=[num1,num2,num3,num4];
     console.log(pickedIds);
     getMessData();
    // document.getElementById("allNamesB4").innerHTML="נבחרו: ";
   for (var i = 0; i < allPeople.length; i++) {
       for(var j=0;j<=3;j++){
             if (allPeople[i].id === pickedIds[j]) {
-                
+                 const temp = {
+                     text: "v",
+                     row: allPeople[i].row,
+                     col: "meta",
+                 };
+                sendData(temp, document.getElementById("meta")); 
             document.getElementById("meta").style.visibility = "visible";
               currPerson[j] = allPeople[i];
                 console.log(currPerson);
@@ -252,6 +279,38 @@ function fixFirstName(fullName) {
     return splittedName[1];
   }
   return splittedName[0];
+}
+function clearList(){
+
+   for(var i=2;i<rowCount;i++){
+       const temp = {
+                 text: "",
+                 row: i,
+                 col: "meta",
+             };
+     sendData(temp, document.getElementById("meta"));
+   }
+    
+}
+function sendData(obj, ele) {
+  console.log(obj);
+  let formData = new FormData();
+  formData.append("data", JSON.stringify(obj));
+  console.log(obj);
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((rep) => {
+      console.log(obj);
+      return rep.json();
+    })
+    .then((json) => {
+      console.log(obj);
+      console.log(json);
+      ele.innerHTML = json.val;
+    });
+
 }
 function copy(id) {
   var text = fullTexts[id - 1];
