@@ -18,7 +18,7 @@ var crewDataURL =
   "https://script.google.com/macros/s/AKfycbz7IgSM1Rhei0PPSgEHwxD_YHtyevYhZt32Mje9asUeGE20_J8a59XYw0xNFJMxjDKXKA/exec";
 getData();
 document.getElementById("meta").style.visibility = "hidden";
-
+var chosenIds=[];
 function getData() {
   fetch(url)
     .then((res) => {
@@ -245,17 +245,13 @@ document.getElementById("meta").style.visibility = "hidden";
     }
     var pickedIds=[num1,num2,num3,num4];
     console.log(pickedIds);
+    chosenIds=pickedIds;
     getMessData();
    // document.getElementById("allNamesB4").innerHTML="נבחרו: ";
   for (var i = 0; i < allPeople.length; i++) {
       for(var j=0;j<=3;j++){
             if (allPeople[i].id === pickedIds[j]) {
-                 const temp = {
-                     text: "v",
-                     row: allPeople[i].row,
-                     col: "meta",
-                 };
-                sendData(temp, document.getElementById("meta")); 
+                 
             document.getElementById("meta").style.visibility = "visible";
               currPerson[j] = allPeople[i];
                 console.log(currPerson);
@@ -320,5 +316,15 @@ function copy(id) {
   elem.select();
   document.execCommand("copy");
   document.body.removeChild(elem);
+    
+    
+    const temp = {
+                     text: "v",
+                     row: chosenIds[id-1],
+                     col: "meta",
+                 };
+                
+    sendData(temp, document.getElementById("meta")); 
+    
   document.getElementById(id+"Copy").innerHTML="הועתק";
 }
