@@ -1,5 +1,8 @@
 var allPeople = [];
+var reallyAllPeople = [];
 var rowCount = 2;
+var peopleOptions = document.getElementById("people0");
+var personOption;
 var size = 0;
 const url =
   "https://script.google.com/macros/s/AKfycbzXoN1d21aGDuS7dUEj9vz6v952hwbKmueQaPdJ20QbrDkH9X6485Vh2IxnYgTbVBR7kA/exec";
@@ -11,14 +14,17 @@ var messes = [
   { name: "", lines: [] },
   { name: "", lines: []}];
 var fullTexts = [[], [], [], []];
-var allIds=[];
-var allIdsWithClips=[];
-var allIdsWithFull=[];
+var allRows=[];
+var allRowsWithClips=[];
+var allRowsWithFull=[];
 var crewDataURL =
   "https://script.google.com/macros/s/AKfycbz7IgSM1Rhei0PPSgEHwxD_YHtyevYhZt32Mje9asUeGE20_J8a59XYw0xNFJMxjDKXKA/exec";
 getData();
+const date = new Date();
+var day = date.getDate();
+var month = date.getMonth() + 1;
 document.getElementById("meta").style.visibility = "hidden";
-var chosenIds=[];
+var chosenRows=[];
 function getData() {
   fetch(url)
     .then((res) => {
@@ -50,23 +56,32 @@ function getData() {
           if (ele.chainthree !== "") newPerson.chain = ele.chainthree;
         }
         if (ele.fixedchain !== "") newPerson.chain = ele.fixedchain;
-          if(newPerson.id!==""&&newPerson.meta!=="v"){
+        personOption = document.createElement("option");
+        personOption.value =
+          newPerson.name + " + " + fixChainFromData(newPerson.chain);
+        if (newPerson.name !== "" || newPerson.chain !== "") {
+          peopleOptions.append(personOption);
+        }
+          reallyAllPeople.push(newPerson);
+          if(newPerson.id!==""&&newPerson.meta===""){
             allPeople.push(newPerson);
             console.log(allPeople[size]);
-              allIds.push(newPerson.id);
+              allRows.push(newPerson.row);
               if(newPerson.clip1!==""||newPerson.clip2!==""){
-                  allIdsWithClips.push(newPerson.id);
+                  allRowsWithClips.push(newPerson.row);
               }
               if(newPerson.linkfull!==""){
-                  allIdsWithFull.push(newPerson.id);
+                  allRowsWithFull.push(newPerson.row);
               }
               size++;
           }
           rowCount++;
       });
         
-      console.log("ids:"+allIds.length+" idswclips:"+allIdsWithClips.length+" idswfull:"+allIdsWithFull.length);
-      if(allIds.length<4||allIdsWithClips.length<4||allIdsWithFull.length<4){
+      console.log("ids:"+allRows.length+" idswclips:"+allRowsWithClips
+                 .length+" idswfull:"+allRowsWithFull.length);
+      if(allRows.length<4||allRowsWithClips
+        .length<4||allRowsWithFull.length<4){
           clearList();
       }else{
         submitData();
@@ -137,6 +152,11 @@ setTimeout(() => {
   const loader = document.getElementById("loader");
   loader.style.display = "none";
 }, 5050);
+setTimeout(() => {
+   const loader0 = document.getElementById("loader0");
+  loader0.style.display = "none";
+}, 2050);
+    
 function cutMess(linesArr, messType,personNum) {
   var currText = "";
   var testDiv = document.getElementById("text" + messType);
@@ -226,31 +246,38 @@ function fixChainFromData(chain) {
   return chain;
 }
 function submitData() {
+    document.getElementById("quickChange").innerHTML="ניקוי שדה פרסום מטא והחזרת החרוז להגרלה";
     for(var i=1;i<=4;i++){
         document.getElementById(i+"Copy").innerHTML="העתקת פוסט";
     }
 document.getElementById("meta").style.visibility = "hidden";
-    var num1=allIdsWithClips[Math.floor(Math.random()*allIdsWithClips.length)];
-    var num2=allIdsWithFull[Math.floor(Math.random()*allIdsWithFull.length)];
+    var num1=allRowsWithClips
+   [Math.floor(Math.random()*allRowsWithClips
+               .length)];
+    var num2=allRowsWithFull[Math.floor(Math.random()*allRowsWithFull.length)];
     while(num1===num2){
-        num2=allIdsWithFull[Math.floor(Math.random()*allIdsWithFull.length)];
+        num2=allRowsWithFull[Math.floor(Math.random()*allRowsWithFull.length)];
     }
-    var num3=allIds[Math.floor(Math.random()*allIds.length)];
+    var num3=allRows[Math.floor(Math.random()*allRows.length)];
     while(num3===num1||num3===num2){
-        num3=allIds[Math.floor(Math.random()*allIds.length)];
+        num3=allRows[Math.floor(Math.random()*allRows.length)];
     }
-    var num4=allIdsWithClips[Math.floor(Math.random()*allIdsWithClips.length)];
+    var num4=allRowsWithClips
+   [Math.floor(Math.random()*allRowsWithClips
+               .length)];
     while(num4===num3||num4===num2||num4===num1){
-        num4=allIdsWithClips[Math.floor(Math.random()*allIdsWithClips.length)]
+        num4=allRowsWithClips
+       [Math.floor(Math.random()*allRowsWithClips
+                   .length)]
     }
-    var pickedIds=[num1,num2,num3,num4];
-    console.log(pickedIds);
-    chosenIds=pickedIds;
-    getMessData();
+    var pickedRows=[num1,num2,num3,num4];
+    console.log(pickedRows);
+    chosenRows=pickedRows;
+    
    // document.getElementById("allNamesB4").innerHTML="נבחרו: ";
   for (var i = 0; i < allPeople.length; i++) {
       for(var j=0;j<=3;j++){
-            if (allPeople[i].id === pickedIds[j]) {
+            if (allPeople[i].row === pickedRows[j]) {
                  
             document.getElementById("meta").style.visibility = "visible";
               currPerson[j] = allPeople[i];
@@ -260,6 +287,7 @@ document.getElementById("meta").style.visibility = "hidden";
             }
       }
   }
+getMessData();
 }
 function fixFirstName(fullName) {
   if (!fullName.includes(" ")) return fullName;
@@ -306,7 +334,32 @@ function sendData(obj, ele) {
       console.log(json);
       ele.innerHTML = json.val;
     });
+}
+function quickChange() {
+    var chosenPersonRow = 0;
+     var nameAndChain = document.getElementById("peopleList0").value.split(" + ");
+  for (var i = 0; i < reallyAllPeople.length; i++) {   
+    if (
+      reallyAllPeople[i].name === nameAndChain[0] &&
+      fixChainFromData(reallyAllPeople[i].chain) === nameAndChain[1]
+    ) {
+      console.log(nameAndChain);
+      chosenPersonRow = reallyAllPeople[i].row;
+    }
+  }
+  if (chosenPersonRow === 0) {
+    alert("נא לבחור חרוז");
+  }
 
+  if (chosenPersonRow > 0) {
+    const temp = {
+      text: "",
+      row: chosenPersonRow,
+      col: "meta",
+    };
+    sendData(temp, document.getElementById("quickChange"));
+    document.getElementById("quickChange").innerHTML="התעדכן";
+  }
 }
 function copy(id) {
   var text = fullTexts[id - 1];
@@ -316,11 +369,9 @@ function copy(id) {
   elem.select();
   document.execCommand("copy");
   document.body.removeChild(elem);
-    
-    
     const temp = {
-                     text: "v",
-                     row: chosenIds[id-1],
+                     text: (date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear(),
+                     row: chosenRows[id-1],
                      col: "meta",
                  };
                 
