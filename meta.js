@@ -124,17 +124,17 @@ function getMessData() {
             ele.line20,
           ]
         };
-          if (newMess.name===("פוסט 4")) {
+          if (newMess.name===("מטא 2 (ראיון)")) {
             messes[1] = newMess;
               
           }
-        if (newMess.name===("פוסט 8 (הודעה משתנה 2)")) {
+        if (newMess.name===("מטא 3 (פרומו)")) {
             messes[2] = newMess;
           }
-          if (newMess.name===("משלוח קליפים 3")) {
+          if (newMess.name===("מטא 1 (פוסט קליפ 1)")) {
             messes[0] = newMess;
           }
-          if (newMess.name===("משלוח קליפים 8")) {
+          if (newMess.name===("מטא 4 (קליפ 2)")) {
             messes[3] = newMess;
           }
       });
