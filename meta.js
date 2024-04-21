@@ -9,11 +9,12 @@ const url =
 var newPerson = {};
 var currPerson = [[],[],[],[]];
 var messes = [
+    { name: "", lines: [] },
   { name: "", lines: [] },
   { name: "", lines: [] },
   { name: "", lines: [] },
   { name: "", lines: []}];
-var fullTexts = [[], [], [], []];
+var fullTexts = [[], [], [], [],[]];
 var allRows=[];
 var allRowsWithClips=[];
 var allRowsWithFull=[];
@@ -137,9 +138,13 @@ function getMessData() {
           if (newMess.name===("מטא 4 (קליפ 2)")) {
             messes[3] = newMess;
           }
+           if (newMess.name===("מטא (רישום)")) {
+            messes[4] = newMess;
+              
+          }
       });
       console.log(messes);
-        for (var i = 0; i <= 3; i++) {
+        for (var i = 0; i <= 4; i++) {
             for (var j = 0; j < messes[i].lines.length; j++) {
                 cutMess(messes[i].lines, i + 1,i);
             }
@@ -360,6 +365,16 @@ function quickChange() {
     sendData(temp, document.getElementById("quickChange"));
     document.getElementById("quickChange").innerHTML="התעדכן";
   }
+}
+function copy0(id) {
+  var text = fullTexts[4];
+  var elem = document.createElement("textarea");
+  document.body.appendChild(elem);
+  elem.value = text;
+  elem.select();
+  document.execCommand("copy");
+  document.body.removeChild(elem);
+  document.getElementById("5Copy").innerHTML="הועתק";
 }
 function copy(id) {
   var text = fullTexts[id - 1];
