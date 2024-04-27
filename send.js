@@ -7,10 +7,15 @@ var optionsCrew = document.getElementById("crew");
 var crewOption;
 var crewList = [];
 var currCrew = {};
+var ChosenCol=0;
+var chosenRow = 0;
 var newCrewMem;
 var wannaFixGuestPhone = true;
+const date = new Date();
+var day = date.getDate();
+var month = date.getMonth() + 1;
 const url =
-  "https://script.google.com/macros/s/AKfycbw_2VmXLs1pJKLZElcT2Tp0tR6tPVRf4UWKfS22_n-F_DSEI2dF2zrsQrQ6If6P4mEaGg/exec";
+  "https://script.google.com/macros/s/AKfycbyFwIMPmjK10MhyCpeKLeeZFIU4LplB0xtvS7Ax8b9z7rDxPS660iOv96yfp9PdRG3wwA/exec";
 var newPerson = {};
 var currPerson = {};
 var messes = [
@@ -257,6 +262,8 @@ function submit() {
 }
 function submitData() {
   toFixGuestPhone();
+     document.getElementById("clip1dateChange").innerHTML="עדכון תאריך שליחת קליפ1";
+    document.getElementById("clip2dateChange").innerHTML="עדכון תאריך שליחת קליפ2";
   for (var i = 0; i < allPeople.length; i++) {
     var nameAndChain = document.getElementById("peopleList").value.split(" + ");
     if (
@@ -264,6 +271,7 @@ function submitData() {
       fixChainFromData(allPeople[i].chain) === nameAndChain[1]
     ) {
       currPerson = allPeople[i];
+        chosenRow = allPeople[i].row;
         document.getElementById("nameB4").innerHTML = allPeople[i].name;
       document.getElementById("guestPhone").value = fixPhoneDataGuest(
         allPeople[i].phone
@@ -377,5 +385,42 @@ function whatsAppMes(id) {
     "&text=" +
     encodeURI(fullTexts[whichMes - 1]);
   window.open(link, "_blank");
+}
+function change(id) {
+    var textEntered=day + "." + month;
+    var dataElement=document.getElementById(id+"Change");
+    chosenCol=id;
+      console.log("col: " + chosenCol);
+  if (chosenRow === 0) {
+    alert("נא לבחור מישהו מהטבלה כדי לשנות");
+  }
+  const temp = {
+    text: textEntered,
+    row: chosenRow,
+    col: chosenCol,
+  };
+  if (chosenRow > 0) {
+    sendData(temp, dataElement);
+      dataElement.innerHTML="תאריך השליחה עודכן";
+  }
+}
+function sendData(obj, ele) {
+  console.log(obj);
+  let formData = new FormData();
+  formData.append("data", JSON.stringify(obj));
+  console.log(obj);
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((rep) => {
+      console.log(obj);
+      return rep.json();
+    })
+    .then((json) => {
+      console.log(obj);
+      console.log(json);
+    });
+  
 }
 
