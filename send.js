@@ -94,8 +94,13 @@ function getCrewData() {
         crewOption = document.createElement("option");
         crewOption.value = newCrewMem.name;
         optionsCrew.append(crewOption);
+        if(newCrewMem.name==="רחל"){
+            document.getElementById("crewList").value = "רחל"; 
+        }
       });
+     
     });
+    
 }
 function getMessData() {
   var newMess;
