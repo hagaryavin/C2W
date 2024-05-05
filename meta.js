@@ -13,8 +13,9 @@ var messes = [
   { name: "", lines: [] },
   { name: "", lines: [] },
   { name: "", lines: [] },
-  { name: "", lines: []}];
-var fullTexts = [[], [], [], [],[]];
+  { name: "", lines: []},
+{ name: "", lines: []}];
+var fullTexts = [[], [], [], [],[],[]];
 var allRows=[];
 var allRowsWithClips=[];
 var allRowsWithFull=[];
@@ -125,33 +126,25 @@ function getMessData() {
             ele.line20,
           ]
         };
-          if (newMess.name===("מטא 2 (ראיון)")) {
-            messes[1] = newMess;
-              
+        for (var i = 1; i <= 6; i++) {
+          if (newMess.name.includes("מטא " + i)) {
+            messes[i - 1] = newMess;
+              console.log(newMess);
           }
-        if (newMess.name===("מטא 3 (פרומו)")) {
-            messes[2] = newMess;
-          }
-          if (newMess.name===("מטא 1 (פוסט קליפ 1)")) {
-            messes[0] = newMess;
-          }
-          if (newMess.name===("מטא 4 (קליפ 2)")) {
-            messes[3] = newMess;
-          }
-           if (newMess.name===("מטא (רישום)")) {
-            messes[4] = newMess;
-              
-          }
+        }
       });
-      console.log(messes);
-        for (var i = 0; i <= 4; i++) {
-            for (var j = 0; j < messes[i].lines.length; j++) {
-                cutMess(messes[i].lines, i + 1,i);
-            }
+      for (var i = 0; i <= 3; i++) {
+        for (var j = 0; j < messes[i].lines.length; j++) {
+          cutMess(messes[i].lines, i + 1,i);
+        }
       }
-      
+      for (var i = 4; i <= 5; i++) {
+        for (var j = 0; j < messes[i].lines.length; j++) {
+          cutMessGen(messes[i].lines, i + 1);
+        }
+      }
     });
-  
+  console.log(fullTexts);
 }
 setTimeout(() => {
   const loader = document.getElementById("loader");
@@ -199,6 +192,44 @@ function cutMess(linesArr, messType,personNum) {
     if (linesArr[i].includes("linkclip2")) {
       linesArr[i] = linesArr[i].replace("linkclip2", currPerson[personNum].clip2);
     }
+    if (linesArr[i] !== "") {
+      if (linesArr[i + 1] !== "end") {
+        currText += linesArr[i] + "\n";
+      }
+      if (linesArr[i + 1] === "end") {
+        currText += linesArr[i];
+      }
+    }
+    if (linesArr[i] === "") {
+      currText += "\n";
+    }
+    while (linesArr[i].includes("*")) {
+            linesArr[i] = linesArr[i].replace("*", "");
+    }
+
+    var testH4 = document.createElement("h4");
+    if (linesArr[i] !== "") {
+      if (linesArr[i + 1] === "") {
+        testH4.classList.add("mb-3");
+      }
+      if (linesArr[i + 1] !== "") {
+        testH4.classList.add("mb-0");
+      }
+      testH4.innerHTML = linesArr[i];
+      testDiv.append(testH4);
+    }
+    i++;
+  }
+  fullTexts[messType - 1] = currText;
+}
+function cutMessGen(linesArr, messType) {
+  var currText = "";
+  var testDiv = document.getElementById("text" + messType);
+  removeAllChildNodes(testDiv);
+  
+  var i = 0;
+  while (linesArr[i] !== "end") {
+    
     if (linesArr[i] !== "") {
       if (linesArr[i + 1] !== "end") {
         currText += linesArr[i] + "\n";
@@ -367,14 +398,14 @@ function quickChange() {
   }
 }
 function copy0(id) {
-  var text = fullTexts[4];
+  var text = fullTexts[id - 1];
   var elem = document.createElement("textarea");
   document.body.appendChild(elem);
   elem.value = text;
   elem.select();
   document.execCommand("copy");
   document.body.removeChild(elem);
-  document.getElementById("5Copy").innerHTML="הועתק";
+  document.getElementById(id+"Copy").innerHTML="הועתק";
 }
 function copy(id) {
   var text = fullTexts[id - 1];
