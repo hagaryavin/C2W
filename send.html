@@ -159,7 +159,14 @@
         <div class="col-auto">
           <h3 class="mb-0"><u>שליחת קליפים לחרוז/צוות</u></h3>
             <h3 class="mb-2" id="nameB4"></h3>
-          <div id="text1"></div>
+              <div class="row align-items-center">
+    <div class="col">
+           <div id="text1"></div>
+                  </div>
+                  <div class="col">
+           <div id="text2"></div>
+                  </div>
+                </div>
           <div class="form-control input-group-text col-auto mb-2" role="group">
             <button
               type="button"
@@ -186,7 +193,6 @@
               העתקת הודעה
             </button>
           </div>
-          <div id="text2"></div>
           <div class="form-control input-group-text col-auto mb-2" role="group">
             
               <button
@@ -195,7 +201,7 @@
                 id="sendMes2"
                 onclick="whatsAppMes('2_guest')"
               >
-                שליחת הודעה לאורח
+                שליחת פרגון לאורח
               </button>
               <button
                 type="button"
@@ -203,7 +209,7 @@
                 id="sendMes2"
                 onclick="whatsAppMes('2_crew')"
               >
-                שליחת הודעה לחברת הצוות
+                שליחת פרגון לחברת הצוות
               </button>
               <button
                 type="button"
@@ -211,7 +217,7 @@
                 id="copyMes2"
                 onclick="copy('2')"
               >
-                העתקת הודעה
+                העתקת פרגון
               </button>
             </div>
           
@@ -330,16 +336,6 @@
               העתקת הודעה
             </button>
           </div>
-           <div class="form-control input-group-text col-auto mb-2" role="group">
-                <button
-              type="button"
-              class="btn form-control btn-outline-secondary"
-              id="clip1dateChange"
-              onclick="change('clip1date')"
-            >
-              עדכון תאריך שליחת קליפ1
-            </button>
-            </div>
           <div id="text7"></div>
           <div class="form-control input-group-text col-auto mb-2" role="group">
             <button
@@ -367,7 +363,16 @@
               העתקת הודעה
             </button>
           </div>
-        
+            <div class="form-control input-group-text col-auto mb-2" role="group">
+                <button
+              type="button"
+              class="btn form-control btn-outline-secondary"
+              id="clip1dateChange"
+              onclick="change('clip1date')"
+            >
+              עדכון תאריך שליחת קליפ1
+            </button>
+            </div>
         <div id="text8"></div>
         <div class="form-control input-group-text col-auto mb-2" role="group">
           <button
@@ -506,6 +511,34 @@
                 class="btn form-control btn-outline-secondary"
                 id="copyMes12"
                 onclick="copy('12')"
+              >
+                העתקת הודעה
+              </button>
+            </div>
+            <div id="text13"></div>
+          <div class="form-control input-group-text col-auto mb-2" role="group">
+            
+              <button
+                type="button"
+                class="btn form-control btn-outline-secondary"
+                id="sendMes13"
+                onclick="whatsAppMes('13_guest')"
+              >
+                שליחת הודעה לאורח
+              </button>
+              <button
+                type="button"
+                class="btn form-control btn-outline-secondary"
+                id="sendMes13"
+                onclick="whatsAppMes('13_crew')"
+              >
+                שליחת הודעה לחברת הצוות
+              </button>
+              <button
+                type="button"
+                class="btn form-control btn-outline-secondary"
+                id="copyMes13"
+                onclick="copy('13')"
               >
                 העתקת הודעה
               </button>
