@@ -15,7 +15,7 @@ const date = new Date();
 var day = date.getDate();
 var month = date.getMonth() + 1;
 const url =
-  "https://script.google.com/macros/s/AKfycbyFwIMPmjK10MhyCpeKLeeZFIU4LplB0xtvS7Ax8b9z7rDxPS660iOv96yfp9PdRG3wwA/exec";
+  "https://script.google.com/macros/s/AKfycbzu8KDFV0Ry9LmF8ZaXapP3h-28Xzr265bYGV5MBdilz3d11Yu72XBKl0YxKLftfwhq/exec";
 var newPerson = {};
 var currPerson = {};
 var messes = [
@@ -49,6 +49,7 @@ function getData() {
           name: ele.name,
           phone: ele.phone,
           chain: ele.chain,
+            feedback:ele.feedback,
           clip1: ele.clip1,
           clip2: ele.clip2,
             clip3: ele.clip3,
@@ -262,6 +263,7 @@ function submit() {
   document.getElementById("clipsSend").style.visibility = "hidden";
   if (checkInputs()) {
     document.getElementById("clipsSend").style.visibility = "visible";
+      
     getMessData();
   }
   console.log("left submit in pre");
@@ -270,6 +272,7 @@ function submitData() {
   toFixGuestPhone();
      document.getElementById("clip1dateChange").innerHTML="עדכון תאריך שליחת קליפ1";
     document.getElementById("clip2dateChange").innerHTML="עדכון תאריך שליחת קליפ2";
+     document.getElementById("feedbackChange").innerHTML="הוספת פידבק";
   for (var i = 0; i < allPeople.length; i++) {
     var nameAndChain = document.getElementById("peopleList").value.split(" + ");
     if (
@@ -278,6 +281,7 @@ function submitData() {
     ) {
       currPerson = allPeople[i];
         chosenRow = allPeople[i].row;
+        document.getElementById("feedbackB4").innerHTML = allPeople[i].feedback;
         document.getElementById("nameB4").innerHTML = allPeople[i].name;
       document.getElementById("guestPhone").value = fixPhoneDataGuest(
         allPeople[i].phone
@@ -408,6 +412,24 @@ function change(id) {
   if (chosenRow > 0) {
     sendData(temp, dataElement);
       dataElement.innerHTML="תאריך השליחה עודכן";
+  }
+}
+function changeFeedback(id) {
+    var textEntered=document.getElementById(id).value;
+    var dataElement=document.getElementById(id+"Change");
+    chosenCol=id;
+      console.log("col: " + chosenCol);
+  if (chosenRow === 0) {
+    alert("נא לבחור מישהו מהטבלה כדי לשנות");
+  }
+  const temp = {
+    text: textEntered,
+    row: chosenRow,
+    col: chosenCol,
+  };
+  if (chosenRow > 0) {
+    sendData(temp, dataElement);
+      dataElement.innerHTML="פידבק התעדכן";
   }
 }
 function sendData(obj, ele) {
