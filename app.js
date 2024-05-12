@@ -342,7 +342,7 @@ function createTasks() {
       });
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
-      optionList.id = "clip1send" + allTasks[i].row;
+      optionList.id = "clip2send" + allTasks[i].row;
       optionList.innerHTML ="לשלוח קליפ 2 ל"+allTasks[i].name + " - " + recDate;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
