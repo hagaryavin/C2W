@@ -1,7 +1,9 @@
 var allPeople = [];
 var reallyAllPeople = [];
 var rowCount = 2;
-var peopleOptions = document.getElementById("people0");
+var peopleOptions0 = document.getElementById("people0");
+var peopleOptions = document.getElementById("people");
+document.getElementById("reels").style.visibility = "hidden";
 var personOption;
 var size = 0;
 const url =
@@ -14,8 +16,9 @@ var messes = [
   { name: "", lines: [] },
   { name: "", lines: [] },
   { name: "", lines: []},
+{ name: "", lines: []},
 { name: "", lines: []}];
-var fullTexts = [[], [], [], [],[],[]];
+var fullTexts = [[], [], [], [],[],[],[]];
 var allRows=[];
 var allRowsWithClips=[];
 var allRowsWithFull=[];
@@ -62,6 +65,7 @@ function getData() {
         personOption.value =
           newPerson.name + " + " + fixChainFromData(newPerson.chain);
         if (newPerson.name !== "" || newPerson.chain !== "") {
+          peopleOptions0.append(personOption);
           peopleOptions.append(personOption);
         }
           reallyAllPeople.push(newPerson);
@@ -126,7 +130,7 @@ function getMessData() {
             ele.line20,
           ]
         };
-        for (var i = 1; i <= 6; i++) {
+        for (var i = 1; i <= 7; i++) {
           if (newMess.name.includes("מטא " + i)) {
             messes[i - 1] = newMess;
               console.log(newMess);
@@ -154,7 +158,57 @@ setTimeout(() => {
    const loader0 = document.getElementById("loader0");
   loader0.style.display = "none";
 }, 2050);
-    
+function cutMessReels(linesArr, messType,person) {
+  var currText = "";
+  var testDiv = document.getElementById("text7");
+  removeAllChildNodes(testDiv);
+  var i = 0;
+  while (linesArr[i] !== "end") {
+    if (linesArr[i].includes("firstNameOfGuest")) {
+      linesArr[i] = linesArr[i].replace(
+        "firstNameOfGuest",
+        fixFirstName(person.name)
+      );
+    }
+    if (linesArr[i].includes("fullNameOfGuest")) {
+      linesArr[i] = linesArr[i].replace("fullNameOfGuest", person.name);
+    }
+    if (linesArr[i].includes("nameOfChain")) {
+      linesArr[i] = linesArr[i].replace("nameOfChain", fixChainFromData(person.chain));
+    }
+    if (linesArr[i].includes("title")) {
+      linesArr[i] = linesArr[i].replace("title", person.title);
+    }
+    if (linesArr[i] !== "") {
+      if (linesArr[i + 1] !== "end") {
+        currText += linesArr[i] + "\n";
+      }
+      if (linesArr[i + 1] === "end") {
+        currText += linesArr[i];
+      }
+    }
+    if (linesArr[i] === "") {
+      currText += "\n";
+    }
+    while (linesArr[i].includes("*")) {
+            linesArr[i] = linesArr[i].replace("*", "");
+    }
+
+    var testH4 = document.createElement("h4");
+    if (linesArr[i] !== "") {
+      if (linesArr[i + 1] === "") {
+        testH4.classList.add("mb-3");
+      }
+      if (linesArr[i + 1] !== "") {
+        testH4.classList.add("mb-0");
+      }
+      testH4.innerHTML = linesArr[i];
+      testDiv.append(testH4);
+    }
+    i++;
+  }
+  fullTexts[messType - 1] = currText;
+}    
 function cutMess(linesArr, messType,personNum) {
   var currText = "";
   var testDiv = document.getElementById("text" + messType);
@@ -395,6 +449,76 @@ function quickChange() {
     };
     sendData(temp, document.getElementById("quickChange"));
     document.getElementById("quickChange").innerHTML="התעדכן";
+  }
+}
+function submit(){
+  removeAllChildNodes(document.getElementById("text7"));
+    document.getElementById("7Copy").innerHTML="העתקת פוסט";
+    document.getElementById("reels").style.visibility = "hidden";
+    var chosenPerson = {row:0};
+     var nameAndChain = document.getElementById("peopleList").value.split(" + ");
+  for (var i = 0; i < reallyAllPeople.length; i++) {   
+    if (
+      reallyAllPeople[i].name === nameAndChain[0] &&
+      fixChainFromData(reallyAllPeople[i].chain) === nameAndChain[1]
+    ) {
+      chosenPerson = reallyAllPeople[i];
+    }
+  }
+    console.log(chosenPerson);
+  if (chosenPerson.row===0) {
+    alert("נא לבחור חרוז");
+  }
+  if (chosenPerson.row >0) {
+  /*    
+var newMess;
+  fetch(crewDataURL)
+    .then((res) => {
+      return res.json();
+    })
+    .then((json) => {
+      json.data.messages.forEach((ele) => {
+        newMess = {
+          name: ele.name,
+          lines: [
+            ele.line1,
+            ele.line2,
+            ele.line3,
+            ele.line4,
+            ele.line5,
+            ele.line6,
+            ele.line7,
+            ele.line8,
+            ele.line9,
+            ele.line10,
+            ele.line11,
+            ele.line12,
+            ele.line13,
+            ele.line14,
+            ele.line15,
+            ele.line16,
+            ele.line17,
+            ele.line18,
+            ele.line19,
+            ele.line20,
+          ]
+        };
+          if (newMess.name.includes("מטא 7")) {
+            messes[i - 1] = newMess;
+              console.log(newMess);
+          }
+              })
+      });
+      
+      */
+      
+      getMessData();
+      for (var j = 0; j < messes[6].lines.length; j++) {
+          cutMessReels(messes[6].lines, 7, chosenPerson);
+        }
+          document.getElementById("reels").style.visibility = "visible";
+
+      
   }
 }
 function copy0(id) {
