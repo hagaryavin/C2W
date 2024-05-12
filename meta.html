@@ -97,17 +97,9 @@
       
     </div>
         <h2 class="mb-0"><u>תכנון יומי מטא</u></h2>
-
-                          <div class="form-control input-group-text" role="group">
-                     
-          <button
-            onclick="reset()"
-            class="btn form-control btn-outline-secondary"
-            id="submit"
-          >
-            להגרלת 4 פוסטים אחרים
-          </button>
-        </div>
+          
+          
+   
            <div class="col-4 text-center">
  
           </div>
@@ -117,7 +109,52 @@
         <div class="container">
          <div id="loader" class="loader"></div>
             </div>
+        
       <div class="container blog-post-meta py-3" id="meta">
+                  <h3 class="mb-2"><u>טקסט לReels</u></h3>
+        
+            
+      <div class="input-group mb-3">
+        <span class="input-group-text">נא לבחור חרוז</span>
+        <input
+        type="text"
+        id="peopleList"
+        list="people"
+        autocomplete="off"
+        class="form-control"
+      />
+      <datalist id="people"> </datalist>
+    
+      
+   </div>
+           <div class="form-control input-group-text col-auto mb-2" role="group">
+          <button onclick="submit()" class="btn form-control btn-outline-secondary input-group-text" id="submit">
+      לבחירה
+    </button>
+          </div>
+  <div class="container" id="reels">
+       <div id="text7"></div>
+       <div class="form-control input-group-text col-auto mb-2" role="group">
+            <button
+              type="button"
+              class="btn form-control btn-outline-secondary"
+              id="7Copy"
+              onclick="copy('7')"
+            >
+              העתקת פוסט
+            </button>
+          </div>
+        </div>
+                 <div class="form-control input-group-text" role="group">
+                     
+          <button
+            onclick="reset()"
+            class="btn form-control btn-outline-secondary"
+            id="submit"
+          >
+            להגרלת 4 פוסטים אחרים
+          </button>
+        </div>
           <h3 class="mb-0"><u>09:05 - פוסט רישום ליוטיוב</u></h3>
            <div id="text5"></div>
           <div class="form-control input-group-text col-auto mb-2" role="group">
@@ -127,7 +164,7 @@
               id="5Copy"
               onclick="copy0('5')"
             >
-              העתקת הודעה
+              העתקת פוסט
             </button>
           </div>
         <div class="col-auto">
@@ -198,9 +235,11 @@
             </button>
           </div>
              </div>
- 
-        </div>
 
+        </div>
+      </div>
+
+       
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
       integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
