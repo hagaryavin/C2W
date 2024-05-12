@@ -30,9 +30,10 @@ var messes = [
 { name: "", lines: [] },
   { name: "", lines: [] } ,
     { name: "", lines: [] },
+    { name: "", lines: [] },
     { name: "", lines: [] }
 ];
-var fullTexts = [[], [], [], [], [], [], [], [],[], [],[],[]];
+var fullTexts = [[], [], [], [], [], [], [], [],[], [],[],[],[]];
 var crewDataURL =
   "https://script.google.com/macros/s/AKfycbz7IgSM1Rhei0PPSgEHwxD_YHtyevYhZt32Mje9asUeGE20_J8a59XYw0xNFJMxjDKXKA/exec";
 getCrewData();
@@ -135,13 +136,13 @@ function getMessData() {
             ele.line20,
           ],
         };
-        for (var i = 1; i <= 12; i++) {
+        for (var i = 1; i <= 13; i++) {
           if (newMess.name===("משלוח קליפים " + i)) {
             messes[i - 1] = newMess;
           }
         }
       });
-      for (var i = 0; i <= 11; i++) {
+      for (var i = 0; i <= 12; i++) {
         for (var j = 0; j < messes[i].lines.length; j++) {
           cutMess(messes[i].lines, i + 1);
         }
