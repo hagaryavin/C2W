@@ -461,7 +461,7 @@ function clip2sendDate(date) {
   var next = new Date(date.getTime());
   next.setDate(date.getDate() + 37);
   if (next.getDay() === 6) {
-    next.setDate(date.getDate() + 8);
+    next.setDate(date.getDate() + 38);
   }
   next.setHours(0, 0, 0);
   return next;
