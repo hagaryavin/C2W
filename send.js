@@ -14,6 +14,7 @@ var wannaFixGuestPhone = true;
 const date = new Date();
 var day = date.getDate();
 var month = date.getMonth() + 1;
+var currentDate = day + "." + month;
 const url =
   "https://script.google.com/macros/s/AKfycbzu8KDFV0Ry9LmF8ZaXapP3h-28Xzr265bYGV5MBdilz3d11Yu72XBKl0YxKLftfwhq/exec";
 var newPerson = {};
@@ -257,6 +258,7 @@ setTimeout(() => {
 }, 2050);
 
 function submit() {
+    document.getElementById("feedback").value=currentDate+" ";
   toFixGuestPhone();
   console.log("entered the submit in pre");
   crewChosen();
