@@ -48,6 +48,10 @@ function getData() {
         }
         if (ele.fixedchain !== "") newPerson.chain = ele.fixedchain;
         if (ele.fixedemail !== "") newPerson.email = ele.fixedemail;
+        if (ele.clip1date !== "")
+          newPerson.clip1date = new Date(ele.clip1date);
+        if (ele.clip2date !== "")
+          newPerson.clip2date = new Date(ele.clip2date);
         allPeople.push(newPerson);
         console.log(allPeople[size]);
         personOption = document.createElement("option");
@@ -107,8 +111,25 @@ function submitData() {
         allPeople[i].link55yt;
       document.getElementById("fullDisplay").innerHTML =
          allPeople[i].linkfull;
-      document.getElementById("clip1dateB4").innerHTML=allPeople[i].clip1date;
-        document.getElementById("clip2dateB4").innerHTML=allPeople[i].clip2date;
+        
+        if (allPeople[i].clip1date !== "") {
+            document.getElementById("clip1dateB4").innerHTML=
+              allPeople[i].clip1date.getDate() +
+              "/" +
+              (allPeople[i].clip1date.getMonth() + 1) +
+              "/" +
+              allPeople[i].clip1date.getFullYear();
+       }
+         if (allPeople[i].clip2date !== "") {
+            document.getElementById("clip2dateB4").innerHTML=
+              allPeople[i].clip2date.getDate() +
+              "/" +
+              (allPeople[i].clip2date.getMonth() + 1) +
+              "/" +
+              allPeople[i].clip2date.getFullYear();
+       }
+        
+        
         if(allPeople[i].clip1date==="")
             {
                document.getElementById("clip1dateB4").innerHTML="אין תאריך משלוח"; 
