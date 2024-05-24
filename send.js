@@ -14,6 +14,7 @@ var wannaFixGuestPhone = true;
 const date = new Date();
 var day = date.getDate();
 var month = date.getMonth() + 1;
+var year = date.getFullYear();
 var currentDate = day + "." + month;
 const url =
   "https://script.google.com/macros/s/AKfycbzu8KDFV0Ry9LmF8ZaXapP3h-28Xzr265bYGV5MBdilz3d11Yu72XBKl0YxKLftfwhq/exec";
@@ -399,7 +400,7 @@ function whatsAppMes(id) {
   window.open(link, "_blank");
 }
 function change(id) {
-    var textEntered=day + "." + month;
+    var textEntered= month+"/"+day+"/"+year;
     var dataElement=document.getElementById(id+"Change");
     chosenCol=id;
       console.log("col: " + chosenCol);
