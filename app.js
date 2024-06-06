@@ -20,7 +20,7 @@ var tasks4personB4 = {};
 const url =
   "https://script.google.com/macros/s/AKfycbzojs9dIr-pr54z2zCEXxklX5h1wIRBHt1ktH8Wwg9KC62R4iDaaCftIK7rHJzrjC3nVQ/exec";
 const taskurl =
-  "https://script.google.com/macros/s/AKfycbx0K3ebBUsz3T69a72mFx3l19lLnmLVmMJ0R4kAMPEeMQLxctqbXoisId1QS9dCn5cdjQ/exec";
+  "https://script.google.com/macros/s/AKfycbzPihJWx8V4pLDREMupZyVy3XFQNbyQOTvmlh5u1s3JBFwkzaKL658DvLii36pIuHYkgw/exec";
 var today = new Date();
 var todaysDay = today.getDate();
 var todaysMonth = today.getMonth() + 1;
@@ -45,6 +45,7 @@ function getData() {
             clip1senddate:"",
             clip2senddate:"",
             clip1sent:"",
+            subsdate:"",
           link: ele.linkfull,
           row: tableRow,
             chain: ele.chain
@@ -73,6 +74,9 @@ function getData() {
           newPerson.clipscreatedate = new Date(
             clipsCreateDate(newPerson.recordingdate)
           );
+          newPerson.subsdate = new Date(
+            subsDate(newPerson.recordingdate)
+          );    
           day = newPerson.recordingdate.getDate();
           month = newPerson.recordingdate.getMonth() + 1;
           recDate = day + "." + month;
@@ -102,6 +106,31 @@ function getData() {
               changeStatus(newPerson.row, newTask.type, "add");
             }
           }
+          if (
+            (newPerson.subsdate < today ||
+              (newPerson.subsdate.getDate() === today.getDate() &&
+                newPerson.subsdate.getMonth() === today.getMonth() &&
+                newPerson.subsdate.getYear() === today.getYear())) &&
+            getTasksDataFromPersonCont(newPerson.row, "subs") ===
+              "not yet"
+          ) {
+            newTask = {
+              name: newPerson.name,
+              recordingdate: newPerson.recordingdate,
+              type: "subs",
+                link:newPerson.link,
+              row: newPerson.row,
+                clip1date:newPerson.clip1sent,
+                chain:newPerson.chain
+            };
+
+            if (!taskAlreadyExist(newTask)) {
+              console.log("new task!");
+              console.log(newTask);
+              allTasks.push(newTask);
+              changeStatus(newPerson.row, newTask.type, "add");
+            }
+          }    
           console.log(newPerson);
           allPeople.push(newPerson);
         }
@@ -194,6 +223,7 @@ function getTasksDataFromPerson() {
           clipscreatestatus: ele.clipscreate8,
           clip1sendstatus: ele.clip1send9,
           clip2sendstatus: ele.clip2send10,
+          subsstatus:ele.subs11
         };
         tasks4lols.push(tasks4personB4);
       });
@@ -212,6 +242,9 @@ function getTasksDataFromPersonCont(row, type) {
       if (type === "clip2send") {
         result = tasks4lols[i].clip2sendstatus;
       }
+      if (type === "subs") {
+        result = tasks4lols[i].subsstatus;
+      }
     }
   }
   return result;
@@ -228,6 +261,7 @@ function taskData() {
           clipscreatestatus: ele.clipscreate8,
            clip1sendstatus: ele.clip1send9,
           clip2sendstatus: ele.clip2send10,
+            subsstatus:ele.subs11
         };
         var currPerson = getPersonFromRow(tasks4person.row);
         if (tasks4person.clipscreatestatus === "active") {
@@ -265,6 +299,21 @@ function taskData() {
             name: currPerson.name,
             recordingdate: currPerson.recordingdate,
             type: "clip2send",
+            row: currPerson.row,
+            clip1date:currPerson.clip1sent,
+              chain:newPerson.chain
+          };
+          if (!taskAlreadyExist(newTask)) {
+            console.log("new task!");
+            console.log(newTask);
+            allTasks.push(newTask);
+          }
+        }
+        if (tasks4person.subsstatus === "active") {
+          newTask = {
+            name: currPerson.name,
+            recordingdate: currPerson.recordingdate,
+            type: "subs",
             row: currPerson.row,
             clip1date:currPerson.clip1sent,
               chain:newPerson.chain
@@ -354,7 +403,7 @@ function createTasks() {
       size++;
     }
     if (allTasks[i].type === "clip2send") {
-      ////////9
+      ////////10
       firstSendDay=allTasks[i].clip1date.getDate()+"."+(allTasks[i].clip1date.getMonth() + 1);
       optionDiv = document.createElement("div");
       optionDiv.classList.add("d-inline-flex");
@@ -370,6 +419,28 @@ function createTasks() {
       optionList = document.createElement("label");
       optionList.id = "clip2send" + allTasks[i].row;
       optionList.innerHTML ="לשלוח קליפ 2 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - משלוח קליפ1 - "+firstSendDay;
+      optionInput.classList.add("form-check-label");
+      optionDiv.append(optionList);
+      list.append(optionDiv);
+      list.append(document.createElement("br"));
+      size++;
+    }
+    if (allTasks[i].type === "subs") {
+      ////////11
+      optionDiv = document.createElement("div");
+      optionDiv.classList.add("d-inline-flex");
+      optionDiv.classList.add("flex-row");
+      optionInput = document.createElement("input");
+      optionInput.id = allTasks[i].row + "Checksubs";
+      optionInput.type = "checkbox";
+      optionInput.classList.add("form-check-input");
+      optionInput.addEventListener("click", function () {
+        check(this);
+      });
+      optionDiv.append(optionInput);
+      optionList = document.createElement("label");
+      optionList.id = "subs" + allTasks[i].row;
+      optionList.innerHTML =allTasks[i].name + " - " + recDate +" - כתוביות (ראיון, 555, שורט)";
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       list.append(optionDiv);
@@ -480,6 +551,15 @@ function fixChainFromData(chain) {
     return splittedChain[0].trim();
   }
   return chain;
+}
+function subsDate(date) {
+    var next = new Date(date.getTime());
+    next.setDate(date.getDate() + 1);
+    if (next.getDay() === 6) {
+        next.setDate(date.getDate() + 2);
+    }
+    next.setHours(0, 0, 0);
+    return next;
 }
 function clipsCreateDate(date) {
   var next = new Date(date.getTime());
