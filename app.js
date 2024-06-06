@@ -555,9 +555,6 @@ function fixChainFromData(chain) {
 function subsDate(date) {
     var next = new Date(date.getTime());
     next.setDate(date.getDate() + 1);
-    if (next.getDay() === 6) {
-        next.setDate(date.getDate() + 2);
-    }
     next.setHours(0, 0, 0);
     return next;
 }
