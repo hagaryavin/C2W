@@ -341,7 +341,7 @@ function taskData() {
 }
 
 function createTasks() {
-  for (var i = 0; i < allTasks.length; i++) {
+  for (var i = allTasks.length-1; i >=0; i--) {
     var tasksPerson = getPersonFromRow(allTasks[i].row);
     day = tasksPerson.recordingdate.getDate();
     month = tasksPerson.recordingdate.getMonth() + 1;
@@ -372,7 +372,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "clipscreate" + allTasks[i].row;
-      optionList.innerHTML ="ליצור קליפים ל"+allTasks[i].name + " - " + recDate +" - "+tasksPerson.link+" - ";
+      optionList.innerHTML ="ליצור קליפים ל"+allTasks[i].name + " - " + recDate +" - "+tasksPerson.link+" - "+chainName+" - ";
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
         optionDiv.append(optionBut);
@@ -440,7 +440,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "subs" + allTasks[i].row;
-      optionList.innerHTML =allTasks[i].name + " - " + recDate +" - כתוביות (ראיון, 555, שורט)";
+      optionList.innerHTML =allTasks[i].name + " - " + recDate +" - כתוביות (ראיון, 555, שורט) - "+chainName;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       list.append(optionDiv);
