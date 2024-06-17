@@ -327,6 +327,7 @@ function taskData() {
       });
       
       if (allTasks.length > 0) {
+        allTasks=sortByType(allTasks);
         createTasks();
       }
       console.log(size);
@@ -339,6 +340,11 @@ function taskData() {
       list.append(optionList);
     });
 }
+function sortByType(arr) {
+  return arr.sort((a, b) => a.type.localeCompare(b.type));
+}
+
+
 
 function createTasks() {
   for (var i = allTasks.length-1; i >=0; i--) {
