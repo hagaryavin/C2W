@@ -136,6 +136,24 @@
             מספר ישראלי
           </label>
         </div>
+          <div class="input-group mb-3">
+           <span class="input-group-text">סוג הודעה:</span>
+          <select id="textType" class="form-select" aria-label="Default select example">
+                <option value="0" selected>פידבק</option>
+                <option value="1">פרגון</option>
+                <option value="2">הדרכה</option>
+                <option value="3">מתנה</option>
+            </select>
+            <span class="input-group-text">מספר קליפ:</span>
+          <select id="clipNum" class="form-select" aria-label="Default select example">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+            </select>
+        </div>          
         <div class="form-control input-group-text" role="group">
           <button
             onclick="submit()"
@@ -161,121 +179,29 @@
             <h3 class="mb-2" id="nameB4"></h3>
               <div class="row align-items-center">
     <div class="col">
-           <div id="text1"></div>
-                  </div>
-                  <div class="col">
-           <div id="text2"></div>
-                  </div>
-                </div>
+            <div id="texttextType"></div>
           <div class="form-control input-group-text col-auto mb-2" role="group">
             <button
               type="button"
               class="btn form-control btn-outline-secondary"
-              id="sendMes1"
-              onclick="whatsAppMes('1_guest')"
+              id="sendMestextType"
+              onclick="whatsAppMes('textType_guest')"
             >
               שליחת הודעה לאורח
             </button>
             <button
               type="button"
               class="btn form-control btn-outline-secondary"
-              id="sendMes1"
-              onclick="whatsAppMes('1_crew')"
+              id="sendMestextType"
+              onclick="whatsAppMes('textType_crew')"
             >
               שליחת הודעה לחברת הצוות
             </button>
             <button
               type="button"
               class="btn form-control btn-outline-secondary"
-              id="copyMes1"
-              onclick="copy('1')"
-            >
-              העתקת הודעה
-            </button>
-          </div>
-          <div class="form-control input-group-text col-auto mb-2" role="group">
-            
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="sendMes2"
-                onclick="whatsAppMes('2_guest')"
-              >
-                שליחת פרגון לאורח
-              </button>
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="sendMes2"
-                onclick="whatsAppMes('2_crew')"
-              >
-                שליחת פרגון לחברת הצוות
-              </button>
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="copyMes2"
-                onclick="copy('2')"
-              >
-                העתקת פרגון
-              </button>
-            </div>
-          
-            <div id="text3"></div>
-            <div
-              class="form-control input-group-text col-auto mb-2"
-              role="group"
-            >
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="sendMes3"
-                onclick="whatsAppMes('3_guest')"
-              >
-                שליחת הודעה לאורח
-              </button>
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="sendMes3"
-                onclick="whatsAppMes('3_crew')"
-              >
-                שליחת הודעה לחברת הצוות
-              </button>
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="copyMes3"
-                onclick="copy('3')"
-              >
-                העתקת הודעה
-              </button>
-            </div>
-          
-
-          <div id="text4"></div>
-          <div class="form-control input-group-text col-auto mb-2" role="group">
-            <button
-              type="button"
-              class="btn form-control btn-outline-secondary"
-              id="sendMes4"
-              onclick="whatsAppMes('4_guest')"
-            >
-              שליחת הודעה לאורח
-            </button>
-            <button
-              type="button"
-              class="btn form-control btn-outline-secondary"
-              id="sendMes4"
-              onclick="whatsAppMes('4_crew')"
-            >
-              שליחת הודעה לחברת הצוות
-            </button>
-            <button
-              type="button"
-              class="btn form-control btn-outline-secondary"
-              id="copyMes4"
-              onclick="copy('4')"
+              id="copyMestextType"
+              onclick="copy('textType')"
             >
               העתקת הודעה
             </button>
@@ -363,16 +289,7 @@
               העתקת הודעה
             </button>
           </div>
-            <div class="form-control input-group-text col-auto mb-2" role="group">
-                <button
-              type="button"
-              class="btn form-control btn-outline-secondary"
-              id="clip1dateChange"
-              onclick="change('clip1date')"
-            >
-              עדכון תאריך שליחת קליפ1
-            </button>
-            </div>
+
         <div id="text8"></div>
         <div class="form-control input-group-text col-auto mb-2" role="group">
           <button
@@ -458,93 +375,15 @@
                 העתקת הודעה
               </button>
             </div>
-         
-            <div id="text11"></div>
-          <div class="form-control input-group-text col-auto mb-2" role="group">
-            
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="sendMes11"
-                onclick="whatsAppMes('11_guest')"
-              >
-                שליחת הודעה לאורח
-              </button>
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="sendMes11"
-                onclick="whatsAppMes('11_crew')"
-              >
-                שליחת הודעה לחברת הצוות
-              </button>
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="copyMes11"
-                onclick="copy('11')"
-              >
-                העתקת הודעה
-              </button>
-            </div>
-        <div id="text12"></div>
-          <div class="form-control input-group-text col-auto mb-2" role="group">
-            
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="sendMes12"
-                onclick="whatsAppMes('12_guest')"
-              >
-                שליחת הודעה לאורח
-              </button>
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="sendMes12"
-                onclick="whatsAppMes('12_crew')"
-              >
-                שליחת הודעה לחברת הצוות
-              </button>
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="copyMes12"
-                onclick="copy('12')"
-              >
-                העתקת הודעה
-              </button>
-            </div>
-            <div id="text13"></div>
-          <div class="form-control input-group-text col-auto mb-2" role="group">
-            
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="sendMes13"
-                onclick="whatsAppMes('13_guest')"
-              >
-                שליחת הודעה לאורח
-              </button>
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="sendMes13"
-                onclick="whatsAppMes('13_crew')"
-              >
-                שליחת הודעה לחברת הצוות
-              </button>
-              <button
-                type="button"
-                class="btn form-control btn-outline-secondary"
-                id="copyMes13"
-                onclick="copy('13')"
-              >
-                העתקת הודעה
-              </button>
-            </div>
-                    <div class="form-control input-group-text col-auto mb-2" role="group">
-                
+            <div class="form-control input-group-text col-auto mb-2" role="group">
+                <button
+              type="button"
+              class="btn form-control btn-outline-secondary"
+              id="clip1dateChange"
+              onclick="change('clip1date')"
+            >
+              עדכון תאריך שליחת קליפ1
+            </button> 
              <button
               type="button"
               class="btn form-control btn-outline-secondary"
