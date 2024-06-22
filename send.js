@@ -10,6 +10,9 @@ var currCrew = {};
 var ChosenCol=0;
 var chosenRow = 0;
 var newCrewMem;
+var currClipNum=1;
+var currClipLink="";
+var currtextType=1;
 var wannaFixGuestPhone = true;
 const date = new Date();
 var day = date.getDate();
@@ -29,13 +32,10 @@ var messes = [
   { name: "", lines: [] },
   { name: "", lines: [] },
   { name: "", lines: [] },
-{ name: "", lines: [] },
-  { name: "", lines: [] } ,
-    { name: "", lines: [] },
-    { name: "", lines: [] },
-    { name: "", lines: [] }
+  { name: "", lines: [] },
+  { name: "", lines: [] }
 ];
-var fullTexts = [[], [], [], [], [], [], [], [],[], [],[],[],[]];
+var fullTexts = [[], [], [], [], [], [], [], [],[], []];
 var crewDataURL =
   "https://script.google.com/macros/s/AKfycbz7IgSM1Rhei0PPSgEHwxD_YHtyevYhZt32Mje9asUeGE20_J8a59XYw0xNFJMxjDKXKA/exec";
 getCrewData();
@@ -58,7 +58,7 @@ function getData() {
           clip4: ele.clip4,
             clip5: ele.clip5,
           clip6: ele.clip6,
-          row: rowCount,
+          row: rowCount
         };
         if (ele.fixedname !== "") newPerson.name = ele.fixedname;
         if (ele.fixedphone !== "") newPerson.phone = ele.fixedphone;
@@ -139,25 +139,39 @@ function getMessData() {
             ele.line20,
           ],
         };
-        for (var i = 1; i <= 13; i++) {
+        for (var i = 1; i <= 10; i++) {
           if (newMess.name===("משלוח קליפים " + i)) {
             messes[i - 1] = newMess;
           }
         }
       });
-      for (var i = 0; i <= 12; i++) {
+      for (var i = 4; i <= 9; i++) {
         for (var j = 0; j < messes[i].lines.length; j++) {
           cutMess(messes[i].lines, i + 1);
         }
       }
+      console.log("currtextType:"+currtextType);
+      for (var j = 0; j < messes[currtextType].lines.length; j++) {
+          console.log(messes[currtextType].lines);
+          cutMess(messes[currtextType].lines,currtextType + 1);
+        }
+      
     });
   console.log(fullTexts);
 }
 
 function cutMess(linesArr, messType) {
   var currText = "";
-  var testDiv = document.getElementById("text" + messType);
-  removeAllChildNodes(testDiv);
+    var testDiv;
+if(messType<5){
+     testDiv = document.getElementById("texttextType");
+    }
+  if(messType>=5&&messType<=10){
+        testDiv = document.getElementById("text" + messType);
+
+    }
+      removeAllChildNodes(testDiv);
+
   var crewMem;
   if (currCrew.name !== "") crewMem = currCrew.name;
   if (currCrew.name === "") crewMem = "";
@@ -175,23 +189,11 @@ function cutMess(linesArr, messType) {
     if (linesArr[i].includes("nameOfChain")) {
       linesArr[i] = linesArr[i].replace("nameOfChain", fixChainFromData(currPerson.chain));
     }
-    if (linesArr[i].includes("linkclip1")) {
-      linesArr[i] = linesArr[i].replace("linkclip1", currPerson.clip1);
+    if (linesArr[i].includes("linkclip")) {
+      linesArr[i] = linesArr[i].replace("linkclip", currClipLink);
     }
-    if (linesArr[i].includes("linkclip2")) {
-      linesArr[i] = linesArr[i].replace("linkclip2", currPerson.clip2);
-    }
-     if (linesArr[i].includes("linkclip3")) {
-      linesArr[i] = linesArr[i].replace("linkclip3", currPerson.clip3);
-    }
-    if (linesArr[i].includes("linkclip4")) {
-      linesArr[i] = linesArr[i].replace("linkclip4", currPerson.clip4);
-    }
-     if (linesArr[i].includes("linkclip5")) {
-      linesArr[i] = linesArr[i].replace("linkclip5", currPerson.clip5);
-    }
-    if (linesArr[i].includes("linkclip6")) {
-      linesArr[i] = linesArr[i].replace("linkclip6", currPerson.clip6);
+    if (linesArr[i].includes("clipNum")) {
+      linesArr[i] = linesArr[i].replace("clipNum", currClipNum);
     }
     if (linesArr[i].includes("crewName")) {
       linesArr[i] = linesArr[i].replace("crewName", crewMem);
@@ -226,7 +228,9 @@ function cutMess(linesArr, messType) {
         testH4.classList.add("mb-0");
       }
       testH4.innerHTML = duplicateLine;
-      testDiv.append(testH4);
+     //if(messType>=5&&messType<=10){    
+        testDiv.append(testH4);
+     // }
     }
     i++;
   }
@@ -259,19 +263,42 @@ setTimeout(() => {
 }, 2050);
 
 function submit() {
-    document.getElementById("feedback").value=currentDate+" ";
+    currClipNum=document.getElementById("clipNum").value;
+    currtextType=parseInt(document.getElementById("textType").value);
+    document.getElementById("feedback").value="-"+currentDate+" ";
   toFixGuestPhone();
   console.log("entered the submit in pre");
   crewChosen();
   document.getElementById("clipsSend").style.visibility = "hidden";
   if (checkInputs()) {
+       if(currClipNum==='1'){
+            currClipLink=currPerson.clip1;
+        }
+        if(currClipNum==='2'){
+            currClipLink=currPerson.clip2;
+        }
+        if(currClipNum==='3'){
+            currClipLink=currPerson.clip3;
+        }
+        if(currClipNum==='4'){
+            currClipLink=currPerson.clip4;
+        }
+        if(currClipNum==='5'){
+            currClipLink=currPerson.clip5;
+        }
+        if(currClipNum==='6'){
+            currClipLink=currPerson.clip6;
+        }
+      console.log(currClipNum+" - "+currClipLink);
     document.getElementById("clipsSend").style.visibility = "visible";
-      
     getMessData();
   }
   console.log("left submit in pre");
 }
 function submitData() {
+        currClipNum=document.getElementById("clipNum").value;
+    currtextType=parseInt(document.getElementById("textType").value);
+    document.getElementById("feedback").value="-"+currentDate+" ";
   toFixGuestPhone();
      document.getElementById("clip1dateChange").innerHTML="עדכון תאריך שליחת קליפ1";
     document.getElementById("clip2dateChange").innerHTML="עדכון תאריך שליחת קליפ2";
@@ -283,6 +310,25 @@ function submitData() {
       fixChainFromData(allPeople[i].chain) === nameAndChain[1]
     ) {
       currPerson = allPeople[i];
+          if(currClipNum==='1'){
+            currClipLink=currPerson.clip1;
+        }
+        if(currClipNum==='2'){
+            currClipLink=currPerson.clip2;
+        }
+        if(currClipNum==='3'){
+            currClipLink=currPerson.clip3;
+        }
+        if(currClipNum==='4'){
+            currClipLink=currPerson.clip4;
+        }
+        if(currClipNum==='5'){
+            currClipLink=currPerson.clip5;
+        }
+        if(currClipNum==='6'){
+            currClipLink=currPerson.clip6;
+        }
+        console.log(currClipNum+" - "+currClipLink);
         chosenRow = allPeople[i].row;
         document.getElementById("feedbackB4").innerHTML = allPeople[i].feedback;
         document.getElementById("nameB4").innerHTML = allPeople[i].name;
@@ -367,7 +413,11 @@ function fixFirstName(fullName) {
   return splittedName[0];
 }
 function copy(id) {
+    
   var text = fullTexts[id - 1];
+    if(id==="textType"){
+       var text = fullTexts[currtextType]; 
+    }
   var elem = document.createElement("textarea");
   document.body.appendChild(elem);
   elem.value = text;
@@ -388,6 +438,7 @@ function phoneForWA(phone, toWho) {
 function whatsAppMes(id) {
   const splittedId = id.split("_");
   var whichMes = splittedId[0];
+   
   var toWho = splittedId[1];
   var phone;
   if (toWho === "guest") phone = document.getElementById("guestPhone").value;
@@ -397,6 +448,13 @@ function whatsAppMes(id) {
     phoneForWA(phone, toWho) +
     "&text=" +
     encodeURI(fullTexts[whichMes - 1]);
+     if(whichMes==="textType"){
+                 var link =
+            "https://api.whatsapp.com/send?phone=" +
+            phoneForWA(phone, toWho) +
+            "&text=" +
+            encodeURI(fullTexts[currtextType]);
+    }
   window.open(link, "_blank");
 }
 function change(id) {
@@ -419,17 +477,21 @@ function change(id) {
 }
 function changeFeedback(id) {
     var textEntered=document.getElementById(id).value;
+    console.log("feedbackB4: "+document.getElementById("feedbackB4").innerHTML);
+    if(document.getElementById("feedbackB4").innerHTML!==""){
+        var textEntered=document.getElementById("feedbackB4").innerHTML+" "+document.getElementById(id).value;
+    }
     var dataElement=document.getElementById(id+"Change");
     chosenCol=id;
       console.log("col: " + chosenCol);
   if (chosenRow === 0) {
     alert("נא לבחור מישהו מהטבלה כדי לשנות");
   }
-  const temp = {
-    text: textEntered,
-    row: chosenRow,
-    col: chosenCol,
-  };
+      var temp = {
+        text: textEntered,
+        row: chosenRow,
+        col: chosenCol,
+      };
   if (chosenRow > 0) {
     sendData(temp, dataElement);
       dataElement.innerHTML="פידבק התעדכן";
