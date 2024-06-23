@@ -31,6 +31,7 @@ function getData() {
           linkfull: ele.linkfull,
           email: ele.email,
           order: ele.order,
+          feedback:ele.feedback,
           clip1: ele.clip1,
           clip2: ele.clip2,
             clip3: ele.clip3,
@@ -93,6 +94,8 @@ function submitData() {
          allPeople[i].email;
       document.getElementById("orderDisplay").innerHTML =
          allPeople[i].order;
+      document.getElementById("feedbackDisplay").innerHTML =
+         allPeople[i].feedback;
       document.getElementById("clip1Display").innerHTML =
          allPeople[i].clip1;
       document.getElementById("clip2Display").innerHTML =
@@ -187,6 +190,9 @@ function copy(id) {
   }
   if (id === "linkfull") {
     text = currPerson.linkfull;
+  }
+  if (id === "feedback") {
+    text = currPerson.feedback;
   }
   if (id === "clip1") {
     text = currPerson.clip1;
