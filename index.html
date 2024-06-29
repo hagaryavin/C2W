@@ -97,6 +97,7 @@
       >פרסום מטא - תכנון יומי
         </button>
     </div>
+
     <div
       class="form-control mb-3"
       role="group"
@@ -105,7 +106,21 @@
       <h3 class="mb-0"><u id="today"></u></h3>
       <div id="loader" class="loader"></div>
       <ul id="list"></ul>
+        <div class="container">
+            <div class="form-control mb-3">
+        <p class="fs-5 fw-normal text-start" id="clipsB4"></p>
+        <div class="input-group-text" role="group">
+          <input type="number" id="clips" class="form-control" placeholder="הוספת כמות קליפים" autocomplete="off" min=0/>
+          <button
+            onclick="changeClips()"
+            class="btn form-control btn-outline-secondary"
+            id="clipsChange"
+          >עדכון כמות קליפים חדשים להפוך לשורטים</button>
+      </div>
     </div>
+      </div>
+    </div>
+             
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
       integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
