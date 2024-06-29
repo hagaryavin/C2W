@@ -16,6 +16,7 @@ var newTask = {};
 var allTasks = [];
 var tasks4lols = [];
 var tasks4person;
+var clipsToChange=0;
 var tasks4personB4 = {};
 const url =
   "https://script.google.com/macros/s/AKfycbzojs9dIr-pr54z2zCEXxklX5h1wIRBHt1ktH8Wwg9KC62R4iDaaCftIK7rHJzrjC3nVQ/exec";
@@ -70,6 +71,10 @@ function getData() {
           newPerson.recordingdate = new Date(ele.fixedrecordingdate);
         if (ele.clip1date !== "")
           newPerson.clip1sent = new Date(ele.clip1date);
+        if(ele.name==="הגר יבין"){
+            clipsToChange=ele.fixedphone;
+            document.getElementById("clipsB4").innerHTML=clipsToChange+" קליפים חדשים להפוך לשורטים";
+        }
         if (newPerson.recordingdate !== "") {
           newPerson.clipscreatedate = new Date(
             clipsCreateDate(newPerson.recordingdate)
@@ -558,6 +563,45 @@ function fixChainFromData(chain) {
   }
   return chain;
 }
+
+function changeClips() {
+    var textEntered=document.getElementById("clips").value;
+    console.log("clipsB4: "+clipsToChange);
+    var dataElement=document.getElementById("clipsChange");
+     var chosenCol="guestphone";
+      console.log("col: " + chosenCol);
+    if(textEntered===""){
+        textEntered=0;
+    }
+          var temp = {
+            text: parseInt(parseInt(textEntered)+parseInt(clipsToChange)),
+            row: 97,
+            col: chosenCol,
+          };
+        sendData2(temp,dataElement);
+        dataElement.innerHTML="כמות הקליפים התעדכנה";
+    
+}
+function sendData2(obj, ele) {
+  console.log(obj);
+  let formData = new FormData();
+  formData.append("data", JSON.stringify(obj));
+  console.log(obj);
+  fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((rep) => {
+      console.log(obj);
+      return rep.json();
+    })
+    .then((json) => {
+      console.log(obj);
+      console.log(json);
+    });
+  
+}
+
 function subsDate(date) {
     var next = new Date(date.getTime());
     next.setDate(date.getDate() + 1);
