@@ -11,8 +11,12 @@ var day = date.getDate();
 var month = date.getMonth() + 1;
 document.getElementById("clip1date").value= day + "." + month;
 document.getElementById("clip2date").value= day + "." + month;
+document.getElementById("clip3date").value= day + "." + month;
+document.getElementById("clip4date").value= day + "." + month;
+document.getElementById("clip5date").value= day + "." + month;
+document.getElementById("clip6date").value= day + "." + month;
 const url =
-  "https://script.google.com/macros/s/AKfycbyFwIMPmjK10MhyCpeKLeeZFIU4LplB0xtvS7Ax8b9z7rDxPS660iOv96yfp9PdRG3wwA/exec";
+  "https://script.google.com/macros/s/AKfycbwU9saIFvyVAo-q-xdZcKbNDPUm46IIVSmrLCYMg7aSzsWnj9JvsKHdT-qO2AQOq2WNnA/exec";
 getData();
 function getData() {
   fetch(url)
@@ -39,7 +43,11 @@ function getData() {
             clip5: ele.clip5,
           clip6: ele.clip6,
             clip1date:ele.clip1date,
-            clip2date:ele.clip2date
+            clip2date:ele.clip2date,
+            clip3date:ele.clip3date,
+            clip4date:ele.clip4date,
+            clip5date:ele.clip5date,
+            clip6date:ele.clip6date
         };
         if (ele.fixedname !== "") newPerson.name = ele.fixedname;
         if (ele.fixedphone !== "") newPerson.phone = ele.fixedphone;
@@ -53,6 +61,14 @@ function getData() {
           newPerson.clip1date = new Date(ele.clip1date);
         if (ele.clip2date !== "")
           newPerson.clip2date = new Date(ele.clip2date);
+        if (ele.clip3date !== "")
+          newPerson.clip3date = new Date(ele.clip3date);
+        if (ele.clip4date !== "")
+          newPerson.clip4date = new Date(ele.clip4date);
+        if (ele.clip5date !== "")
+          newPerson.clip5date = new Date(ele.clip5date);
+        if (ele.clip6date !== "")
+          newPerson.clip6date = new Date(ele.clip6date);
         allPeople.push(newPerson);
         console.log(allPeople[size]);
         personOption = document.createElement("option");
@@ -74,7 +90,10 @@ function submitData() {
         }
     document.getElementById("clip1dateChange").innerHTML="לעדכן תאריך שליחה";
     document.getElementById("clip2dateChange").innerHTML="לעדכן תאריך שליחה";
-    
+    document.getElementById("clip3dateChange").innerHTML="לעדכן תאריך שליחה";
+    document.getElementById("clip4dateChange").innerHTML="לעדכן תאריך שליחה";
+    document.getElementById("clip5dateChange").innerHTML="לעדכן תאריך שליחה";
+    document.getElementById("clip6dateChange").innerHTML="לעדכן תאריך שליחה";
   for (var i = 0; i < allPeople.length; i++) {
     var nameAndChain = document.getElementById("peopleList").value.split(" + ");
     if (
@@ -131,6 +150,38 @@ function submitData() {
               "/" +
               allPeople[i].clip2date.getFullYear();
        }
+       if (allPeople[i].clip3date !== "") {
+            document.getElementById("clip3dateB4").innerHTML=
+              allPeople[i].clip3date.getDate() +
+              "/" +
+              (allPeople[i].clip3date.getMonth() + 1) +
+              "/" +
+              allPeople[i].clip3date.getFullYear();
+       }
+         if (allPeople[i].clip4date !== "") {
+            document.getElementById("clip4dateB4").innerHTML=
+              allPeople[i].clip4date.getDate() +
+              "/" +
+              (allPeople[i].clip4date.getMonth() + 1) +
+              "/" +
+              allPeople[i].clip4date.getFullYear();
+       }
+        if (allPeople[i].clip5date !== "") {
+            document.getElementById("clip5dateB4").innerHTML=
+              allPeople[i].clip5date.getDate() +
+              "/" +
+              (allPeople[i].clip5date.getMonth() + 1) +
+              "/" +
+              allPeople[i].clip5date.getFullYear();
+       }
+         if (allPeople[i].clip6date !== "") {
+            document.getElementById("clip6dateB4").innerHTML=
+              allPeople[i].clip6date.getDate() +
+              "/" +
+              (allPeople[i].clip6date.getMonth() + 1) +
+              "/" +
+              allPeople[i].clip6date.getFullYear();
+       }
         
         
         if(allPeople[i].clip1date==="")
@@ -140,6 +191,22 @@ function submitData() {
         if(allPeople[i].clip2date==="")
             {
                document.getElementById("clip2dateB4").innerHTML="אין תאריך משלוח"; 
+            }
+         if(allPeople[i].clip3date==="")
+            {
+               document.getElementById("clip3dateB4").innerHTML="אין תאריך משלוח"; 
+            }
+        if(allPeople[i].clip4date==="")
+            {
+               document.getElementById("clip4dateB4").innerHTML="אין תאריך משלוח"; 
+            }
+         if(allPeople[i].clip5date==="")
+            {
+               document.getElementById("clip5dateB4").innerHTML="אין תאריך משלוח"; 
+            }
+        if(allPeople[i].clip6date==="")
+            {
+               document.getElementById("clip6dateB4").innerHTML="אין תאריך משלוח"; 
             }
       chosenRow=allPeople[i].row;   
     }
