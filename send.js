@@ -20,7 +20,7 @@ var month = date.getMonth() + 1;
 var year = date.getFullYear();
 var currentDate = day + "." + month;
 const url =
-  "https://script.google.com/macros/s/AKfycbzu8KDFV0Ry9LmF8ZaXapP3h-28Xzr265bYGV5MBdilz3d11Yu72XBKl0YxKLftfwhq/exec";
+  "https://script.google.com/macros/s/AKfycbwU9saIFvyVAo-q-xdZcKbNDPUm46IIVSmrLCYMg7aSzsWnj9JvsKHdT-qO2AQOq2WNnA/exec";
 var newPerson = {};
 var currPerson = {};
 var messes = [
@@ -265,6 +265,8 @@ setTimeout(() => {
 function submit() {
     currClipNum=document.getElementById("clipNum").value;
     currtextType=parseInt(document.getElementById("textType").value);
+        document.getElementById("clipdateChange").innerHTML="עדכון תאריך שליחת קליפ "+currClipNum;
+
     document.getElementById("feedback").value="-"+currentDate+" ";
   toFixGuestPhone();
   console.log("entered the submit in pre");
@@ -300,9 +302,9 @@ function submitData() {
     currtextType=parseInt(document.getElementById("textType").value);
     document.getElementById("feedback").value="-"+currentDate+" ";
   toFixGuestPhone();
-     document.getElementById("clip1dateChange").innerHTML="עדכון תאריך שליחת קליפ1";
-    document.getElementById("clip2dateChange").innerHTML="עדכון תאריך שליחת קליפ2";
      document.getElementById("feedbackChange").innerHTML="הוספת פידבק";
+ document.getElementById("clipdateChange").innerHTML="עדכון תאריך שליחת קליפ "+currClipNum;
+
   for (var i = 0; i < allPeople.length; i++) {
     var nameAndChain = document.getElementById("peopleList").value.split(" + ");
     if (
@@ -460,7 +462,7 @@ function whatsAppMes(id) {
 function change(id) {
     var textEntered= month+"/"+day+"/"+year;
     var dataElement=document.getElementById(id+"Change");
-    chosenCol=id;
+    chosenCol=("clip"+currClipNum+"date");
       console.log("col: " + chosenCol);
   if (chosenRow === 0) {
     alert("נא לבחור מישהו מהטבלה כדי לשנות");
