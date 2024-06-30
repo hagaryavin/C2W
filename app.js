@@ -11,6 +11,7 @@ var month;
 var recDate;
 var chainName;
 var firstSendDay;
+var secondSendDay;
 var tableRow = 2;
 var newTask = {};
 var allTasks = [];
@@ -21,7 +22,7 @@ var tasks4personB4 = {};
 const url =
   "https://script.google.com/macros/s/AKfycbzojs9dIr-pr54z2zCEXxklX5h1wIRBHt1ktH8Wwg9KC62R4iDaaCftIK7rHJzrjC3nVQ/exec";
 const taskurl =
-  "https://script.google.com/macros/s/AKfycbzPihJWx8V4pLDREMupZyVy3XFQNbyQOTvmlh5u1s3JBFwkzaKL658DvLii36pIuHYkgw/exec";
+  "https://script.google.com/macros/s/AKfycby17a_vfiR8IXwkNb8Uk2ZxAet_I1qkJd6y9n_nZRfl2S5-6pad8EmH9GyxRB0WrO78Aw/exec";
 var today = new Date();
 var todaysDay = today.getDate();
 var todaysMonth = today.getMonth() + 1;
@@ -46,6 +47,7 @@ function getData() {
             clip1senddate:"",
             clip2senddate:"",
             clip1sent:"",
+            clip2sent:"",
             subsdate:"",
           link: ele.linkfull,
           row: tableRow,
@@ -71,6 +73,8 @@ function getData() {
           newPerson.recordingdate = new Date(ele.fixedrecordingdate);
         if (ele.clip1date !== "")
           newPerson.clip1sent = new Date(ele.clip1date);
+        if (ele.clip2date !== "")
+          newPerson.clip2sent = new Date(ele.clip2date);
         if(ele.name==="הגר יבין"){
             clipsToChange=ele.fixedphone;
             document.getElementById("clipsB4").innerHTML=clipsToChange+" קליפים חדשים להפוך לשורטים";
@@ -101,6 +105,7 @@ function getData() {
                 link:newPerson.link,
               row: newPerson.row,
                 clip1date:newPerson.clip1sent,
+                clip2date:newPerson.clip2sent,
                 chain:newPerson.chain
             };
 
@@ -126,6 +131,7 @@ function getData() {
                 link:newPerson.link,
               row: newPerson.row,
                 clip1date:newPerson.clip1sent,
+                clip2date:newPerson.clip2sent,
                 chain:newPerson.chain
             };
 
@@ -162,6 +168,7 @@ function getData() {
                 link:newPerson.link,
               row: newPerson.row,
                 clip1date:newPerson.clip1sent,
+                clip2date:newPerson.clip2sent,
                 chain:newPerson.chain
             };
 
@@ -197,6 +204,7 @@ function getData() {
               link:newPerson.link,
               row: newPerson.row,
                 clip1date:newPerson.clip1sent,
+                clip2date:newPerson.clip2sent,
                 chain:newPerson.chain
             };
 
@@ -210,6 +218,42 @@ function getData() {
           console.log(newPerson);
           allPeople.push(newPerson);
         }
+        if (newPerson.clip2sent !== "") {
+          newPerson.clip3senddate = new Date(
+            clip3sendDate(newPerson.clip2sent)
+          );
+          day = newPerson.recordingdate.getDate();
+          month = newPerson.recordingdate.getMonth() + 1;
+          recDate = day + "." + month;
+          if (
+            (newPerson.clip3senddate < today ||
+              (newPerson.clip3senddate.getDate() === today.getDate() &&
+                newPerson.clip3senddate.getMonth() === today.getMonth() &&
+                newPerson.clip3senddate.getYear() === today.getYear())) &&
+            getTasksDataFromPersonCont(newPerson.row, "clip3send") ===
+              "not yet"
+          ) {
+            newTask = {
+              name: newPerson.name,
+              recordingdate: newPerson.recordingdate,
+              type: "clip3send",
+              link:newPerson.link,
+              row: newPerson.row,
+                clip1date:newPerson.clip1sent,
+                clip2date:newPerson.clip2sent,
+                chain:newPerson.chain
+            };
+
+            if (!taskAlreadyExist(newTask)) {
+              console.log("new task!");
+              console.log(newTask);
+              allTasks.push(newTask);
+              changeStatus(newPerson.row, newTask.type, "add");
+            }
+          }
+          console.log(newPerson);
+          allPeople.push(newPerson);
+        }    
       });
       taskData();
     });
@@ -228,7 +272,8 @@ function getTasksDataFromPerson() {
           clipscreatestatus: ele.clipscreate8,
           clip1sendstatus: ele.clip1send9,
           clip2sendstatus: ele.clip2send10,
-          subsstatus:ele.subs11
+          subsstatus:ele.subs11,
+           clip3sendstatus: ele.clip3send12, 
         };
         tasks4lols.push(tasks4personB4);
       });
@@ -250,6 +295,9 @@ function getTasksDataFromPersonCont(row, type) {
       if (type === "subs") {
         result = tasks4lols[i].subsstatus;
       }
+       if (type === "clip3send") {
+        result = tasks4lols[i].clip3sendstatus;
+      }
     }
   }
   return result;
@@ -266,7 +314,8 @@ function taskData() {
           clipscreatestatus: ele.clipscreate8,
            clip1sendstatus: ele.clip1send9,
           clip2sendstatus: ele.clip2send10,
-            subsstatus:ele.subs11
+            subsstatus:ele.subs11,
+            clip3sendstatus: ele.clip3send12
         };
         var currPerson = getPersonFromRow(tasks4person.row);
         if (tasks4person.clipscreatestatus === "active") {
@@ -276,6 +325,7 @@ function taskData() {
             type: "clipscreate",
             row: currPerson.row,
             clip1date:currPerson.clip1sent,
+              clip2date:currPerson.clip2sent,
               chain:newPerson.chain
           };
           if (!taskAlreadyExist(newTask)) {
@@ -291,6 +341,7 @@ function taskData() {
             type: "clip1send",
             row: currPerson.row,
             clip1date:currPerson.clip1sent,
+              clip2date:currPerson.clip2sent,
               chain:newPerson.chain
           };
           if (!taskAlreadyExist(newTask)) {
@@ -306,6 +357,7 @@ function taskData() {
             type: "clip2send",
             row: currPerson.row,
             clip1date:currPerson.clip1sent,
+              clip2date:currPerson.clip2sent,
               chain:newPerson.chain
           };
           if (!taskAlreadyExist(newTask)) {
@@ -321,6 +373,23 @@ function taskData() {
             type: "subs",
             row: currPerson.row,
             clip1date:currPerson.clip1sent,
+              clip2date:currPerson.clip2sent,
+              chain:newPerson.chain
+          };
+          if (!taskAlreadyExist(newTask)) {
+            console.log("new task!");
+            console.log(newTask);
+            allTasks.push(newTask);
+          }
+        }
+        if (tasks4person.clip3sendstatus === "active") {
+          newTask = {
+            name: currPerson.name,
+            recordingdate: currPerson.recordingdate,
+            type: "clip3send",
+            row: currPerson.row,
+            clip1date:currPerson.clip1sent,
+              clip2date:currPerson.clip2sent,
               chain:newPerson.chain
           };
           if (!taskAlreadyExist(newTask)) {
@@ -429,7 +498,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "clip2send" + allTasks[i].row;
-      optionList.innerHTML ="לשלוח קליפ 2 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - משלוח קליפ1 - "+firstSendDay;
+      optionList.innerHTML ="לשלוח קליפ 2 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - משלוח קליפ 1 - "+firstSendDay;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       list.append(optionDiv);
@@ -452,6 +521,29 @@ function createTasks() {
       optionList = document.createElement("label");
       optionList.id = "subs" + allTasks[i].row;
       optionList.innerHTML =allTasks[i].name + " - " + recDate +" - כתוביות (ראיון, 555, שורט) - "+chainName;
+      optionInput.classList.add("form-check-label");
+      optionDiv.append(optionList);
+      list.append(optionDiv);
+      list.append(document.createElement("br"));
+      size++;
+    }
+    if (allTasks[i].type === "clip3send") {
+      ////////12
+      secondSendDay=allTasks[i].clip2date.getDate()+"."+(allTasks[i].clip2date.getMonth() + 1);
+      optionDiv = document.createElement("div");
+      optionDiv.classList.add("d-inline-flex");
+      optionDiv.classList.add("flex-row");
+      optionInput = document.createElement("input");
+      optionInput.id = allTasks[i].row + "Checkclip3send";
+      optionInput.type = "checkbox";
+      optionInput.classList.add("form-check-input");
+      optionInput.addEventListener("click", function () {
+        check(this);
+      });
+      optionDiv.append(optionInput);
+      optionList = document.createElement("label");
+      optionList.id = "clip3send" + allTasks[i].row;
+      optionList.innerHTML ="לשלוח קליפ 3 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - משלוח קליפ 2 - "+secondSendDay;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       list.append(optionDiv);
@@ -624,6 +716,15 @@ function clip1sendDate(date) {
   return next;
 }
 function clip2sendDate(date) {
+  var next = new Date(date.getTime());
+  next.setDate(date.getDate() + 30);
+  if (next.getDay() === 6) {
+    next.setDate(date.getDate() + 31);
+  }
+  next.setHours(0, 0, 0);
+  return next;
+}
+function clip3sendDate(date) {
   var next = new Date(date.getTime());
   next.setDate(date.getDate() + 30);
   if (next.getDay() === 6) {
