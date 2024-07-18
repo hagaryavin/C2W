@@ -17,8 +17,9 @@ var messes = [
   { name: "", lines: [] },
   { name: "", lines: []},
 { name: "", lines: []},
+{ name: "", lines: []},
 { name: "", lines: []}];
-var fullTexts = [[], [], [], [],[],[],[]];
+var fullTexts = [[], [], [], [],[],[],[],[]];
 var allRows=[];
 var allRowsWithClips=[];
 var allRowsWithFull=[];
@@ -65,7 +66,8 @@ function getData() {
         personOption.value =
           newPerson.name + " + " + fixChainFromData(newPerson.chain);
         if (newPerson.name !== "" || newPerson.chain !== "") {
-          peopleOptions0.append(personOption);
+            var anotherOption=personOption;
+          peopleOptions0.append(anotherOption);
           peopleOptions.append(personOption);
         }
           reallyAllPeople.push(newPerson);
@@ -83,7 +85,7 @@ function getData() {
           }
           rowCount++;
       });
-        
+        console.log("rc:"+rowCount+" size:"+size);
       console.log("ids:"+allRows.length+" idswclips:"+allRowsWithClips
                  .length+" idswfull:"+allRowsWithFull.length);
       if(allRows.length<4||allRowsWithClips
@@ -130,22 +132,25 @@ function getMessData() {
             ele.line20,
           ]
         };
-        for (var i = 1; i <= 7; i++) {
+        for (var i = 1; i <= 8; i++) {
           if (newMess.name.includes("מטא " + i)) {
             messes[i - 1] = newMess;
               console.log(newMess);
           }
         }
       });
-      for (var i = 0; i <= 3; i++) {
-        for (var j = 0; j < messes[i].lines.length; j++) {
-          cutMess(messes[i].lines, i + 1,i);
-        }
-      }
-      for (var i = 4; i <= 5; i++) {
+      for (var i = 1; i <= 2; i++) {
         for (var j = 0; j < messes[i].lines.length; j++) {
           cutMessGen(messes[i].lines, i + 1);
         }
+      }
+      for (var i = 3; i <= 6; i++) {
+        for (var j = 0; j < messes[i].lines.length; j++) {
+          cutMess(messes[i].lines, i + 1,i-3);
+        }
+      }
+      for (var j = 0; j < messes[7].lines.length; j++) {
+        cutMessGen(messes[i].lines, 8);
       }
     });
   console.log(fullTexts);
@@ -160,7 +165,7 @@ setTimeout(() => {
 }, 2050);
 function cutMessReels(linesArr, messType,person) {
   var currText = "";
-  var testDiv = document.getElementById("text7");
+  var testDiv = document.getElementById("text1");
   removeAllChildNodes(testDiv);
   var i = 0;
   while (linesArr[i] !== "end") {
@@ -388,16 +393,32 @@ function fixFirstName(fullName) {
     splittedName[0] === "דוקטור" ||
     splittedName[0] === "פרופסור" ||
     splittedName[0] === "פרופ'" ||
-    splittedName[0] === "Dr." ||
+    splittedName[0] === "Dr."||
      splittedName[0] === "הרב" ||
      splittedName[0] === "ד״ר" 
+      
   ) {
     return splittedName[1];
   }
   return splittedName[0];
 }
 function clearList(){
-
+   for(var i=2;i<rowCount;i++){
+       const temp = {
+                 text: "",
+                 row: i,
+                 col: "meta",
+             };
+     sendData(temp, document.getElementById("meta"));
+   }
+  for(var i=2;i<rowCount;i++){
+       const temp = {
+                 text: "",
+                 row: i,
+                 col: "meta",
+             };
+     sendData(temp, document.getElementById("meta"));
+   }
    for(var i=2;i<rowCount;i++){
        const temp = {
                  text: "",
@@ -515,8 +536,8 @@ var newMess;
       */
       
       getMessData();
-      for (var j = 0; j < messes[6].lines.length; j++) {
-          cutMessReels(messes[6].lines, 7, chosenPerson);
+      for (var j = 0; j < messes[0].lines.length; j++) {
+          cutMessReels(messes[0].lines, 1, chosenPerson);
         }
           document.getElementById("reels").style.visibility = "visible";
 
@@ -543,7 +564,7 @@ function copy(id) {
   document.body.removeChild(elem);
     const temp = {
                      text: (date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear(),
-                     row: chosenRows[id-1],
+                     row: chosenRows[id-4],
                      col: "meta",
                  };
                 
