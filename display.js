@@ -16,7 +16,7 @@ document.getElementById("clip4date").value= day + "." + month;
 document.getElementById("clip5date").value= day + "." + month;
 document.getElementById("clip6date").value= day + "." + month;
 const url =
-  "https://script.google.com/macros/s/AKfycbwU9saIFvyVAo-q-xdZcKbNDPUm46IIVSmrLCYMg7aSzsWnj9JvsKHdT-qO2AQOq2WNnA/exec";
+  "https://script.google.com/macros/s/AKfycbyt__ZpRfNw8yd8Iwy10ZeVvM9QJ3dDEXbraolOWkmYLZqfD5cPa2P_YP16DUh3eVBQDQ/exec";
 getData();
 function getData() {
   fetch(url)
@@ -47,7 +47,8 @@ function getData() {
             clip3date:ele.clip3date,
             clip4date:ele.clip4date,
             clip5date:ele.clip5date,
-            clip6date:ele.clip6date
+            clip6date:ele.clip6date,
+            outofmeta:ele.outofmeta
         };
         if (ele.fixedname !== "") newPerson.name = ele.fixedname;
         if (ele.fixedphone !== "") newPerson.phone = ele.fixedphone;
@@ -94,6 +95,7 @@ function submitData() {
     document.getElementById("clip4dateChange").innerHTML="לעדכן תאריך שליחה";
     document.getElementById("clip5dateChange").innerHTML="לעדכן תאריך שליחה";
     document.getElementById("clip6dateChange").innerHTML="לעדכן תאריך שליחה";
+    document.getElementById("outofmetaChange").innerHTML="להוציא מההגרלה של מטא";
   for (var i = 0; i < allPeople.length; i++) {
     var nameAndChain = document.getElementById("peopleList").value.split(" + ");
     if (
@@ -303,6 +305,24 @@ function change(id) {
   if (chosenRow > 0) {
     sendData(temp, dataElement);
       dataElement.innerHTML="תאריך השליחה עודכן";
+  }
+}
+function changeOutofmeta(id) {
+    var textEntered="v";
+    var dataElement=document.getElementById(id+"Change");
+    chosenCol=id;
+      console.log("col: " + chosenCol);
+  if (chosenRow === 0) {
+    alert("נא לבחור מישהו מהטבלה כדי לשנות");
+  }
+  const temp = {
+    text: textEntered,
+    row: chosenRow,
+    col: chosenCol,
+  };
+  if (chosenRow > 0) {
+    sendData(temp, dataElement);
+      dataElement.innerHTML="החרוז הוצא מההגרלה";
   }
 }
 function sendData(obj, ele) {
