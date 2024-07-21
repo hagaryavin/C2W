@@ -21,7 +21,8 @@ var messes = [
 { name: "", lines: []}];
 var fullTexts = [[], [], [], [],[],[],[],[]];
 var allRows=[];
-var allRowsWithClips=[];
+var allRowsWithClip1=[];
+var allRowsWithClip2=[];
 var allRowsWithFull=[];
 var crewDataURL =
   "https://script.google.com/macros/s/AKfycbz7IgSM1Rhei0PPSgEHwxD_YHtyevYhZt32Mje9asUeGE20_J8a59XYw0xNFJMxjDKXKA/exec";
@@ -49,8 +50,8 @@ function getData() {
             clip1:ele.clip1,
             clip2:ele.clip2,
             meta:ele.meta,
-             row: rowCount
-            
+            outofmeta:ele.outofmeta,
+            row: rowCount 
         };
         if (ele.fixedname !== "") newPerson.name = ele.fixedname;
         if (ele.fixedtopicofstory !== "")
@@ -71,12 +72,15 @@ function getData() {
           peopleOptions.append(personOption);
         }
           reallyAllPeople.push(newPerson);
-          if(newPerson.id!==""&&newPerson.meta===""){
+          if(newPerson.id!==""&&newPerson.meta===""&&newPerson.outofmeta===""){
             allPeople.push(newPerson);
             console.log(allPeople[size]);
               allRows.push(newPerson.row);
-              if(newPerson.clip1!==""||newPerson.clip2!==""){
-                  allRowsWithClips.push(newPerson.row);
+              if(newPerson.clip1!==""){
+                  allRowsWithClip1.push(newPerson.row);
+              }
+               if(newPerson.clip2!==""){
+                  allRowsWithClip2.push(newPerson.row);
               }
               if(newPerson.linkfull!==""){
                   allRowsWithFull.push(newPerson.row);
@@ -86,12 +90,18 @@ function getData() {
           rowCount++;
       });
         console.log("rc:"+rowCount+" size:"+size);
-      console.log("ids:"+allRows.length+" idswclips:"+allRowsWithClips
+      console.log("ids:"+allRows.length+" idswclip1:"+allRowsWithClip1
+                 .length+" idswclip2:"+allRowsWithClip2
                  .length+" idswfull:"+allRowsWithFull.length);
-      if(allRows.length<4||allRowsWithClips
+      document.getElementById("numWithClip1").innerHTML="נשארו בהגרלה: "+allRowsWithClip1.length;
+       document.getElementById("numWithAll").innerHTML="נשארו בהגרלה: "+allRows.length;
+      document.getElementById("numWithFull").innerHTML="נשארו בהגרלה: "+allRowsWithFull.length;
+       document.getElementById("numWithClip2").innerHTML="נשארו בהגרלה: "+allRowsWithClip2.length;
+      if(allRows.length<4||allRowsWithClip1
+        .length<4||allRowsWithClip2
         .length<4||allRowsWithFull.length<4){
           clearList();
-      }else{
+      }else{0
         submitData();
       }
     });
@@ -346,8 +356,8 @@ function submitData() {
         document.getElementById(i+"Copy").innerHTML="העתקת פוסט";
     }
 document.getElementById("meta").style.visibility = "hidden";
-    var num1=allRowsWithClips
-   [Math.floor(Math.random()*allRowsWithClips
+    var num1=allRowsWithClip1
+   [Math.floor(Math.random()*allRowsWithClip1
                .length)];
     var num2=allRowsWithFull[Math.floor(Math.random()*allRowsWithFull.length)];
     while(num1===num2){
@@ -357,12 +367,12 @@ document.getElementById("meta").style.visibility = "hidden";
     while(num3===num1||num3===num2){
         num3=allRows[Math.floor(Math.random()*allRows.length)];
     }
-    var num4=allRowsWithClips
-   [Math.floor(Math.random()*allRowsWithClips
+    var num4=allRowsWithClip2
+   [Math.floor(Math.random()*allRowsWithClip2
                .length)];
     while(num4===num3||num4===num2||num4===num1){
-        num4=allRowsWithClips
-       [Math.floor(Math.random()*allRowsWithClips
+        num4=allRowsWithClip2
+       [Math.floor(Math.random()*allRowsWithClip2
                    .length)]
     }
     var pickedRows=[num1,num2,num3,num4];
