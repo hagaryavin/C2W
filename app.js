@@ -415,7 +415,8 @@ function taskData() {
     });
 }
 function sortByType(arr) {
-  return arr.sort((a, b) => a.type.localeCompare(b.type));
+    var typesOrder = ["sub", "clipscreate", "clip1send", "clip2send", "clip3send"];
+   return arr.sort((a, b) => typesOrder.indexOf(b.type) - typesOrder.indexOf(a.type));
 }
 
 
@@ -498,7 +499,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "clip2send" + allTasks[i].row;
-      optionList.innerHTML ="לשלוח קליפ 2 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - משלוח קליפ 1 - "+firstSendDay;
+      optionList.innerHTML ="לשלוח קליפ 2 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 1 נשלח - "+firstSendDay;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       list.append(optionDiv);
@@ -520,7 +521,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "subs" + allTasks[i].row;
-      optionList.innerHTML =allTasks[i].name + " - " + recDate +" - לחתוך LIVE + כתוביות (ראיון, 555, שורט) - "+chainName;
+      optionList.innerHTML =allTasks[i].name + " - " + recDate +" - לחתוך LIVE + כתוביות (ראיון, 555, שורט) + להוריד שורט למחשב - "+chainName;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       list.append(optionDiv);
@@ -543,7 +544,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "clip3send" + allTasks[i].row;
-      optionList.innerHTML ="לשלוח קליפ 3 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - משלוח קליפ 2 - "+secondSendDay;
+      optionList.innerHTML ="לשלוח קליפ 3 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 2 נשלח - "+secondSendDay;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       list.append(optionDiv);
