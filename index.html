@@ -30,6 +30,17 @@
           font-size: 3.5rem;
         }
       }
+      .collapse {
+          &:not(.show) {
+            display: none;
+          }
+        }
+
+        .collapsing {
+          height: 0;
+          overflow: hidden;
+          @include transition($transition-collapse);
+        }
 
       .loader {
         border: 16px solid #f3f3f3;
@@ -104,8 +115,33 @@
       id="options"
     >
       <h3 class="mb-0"><u id="today"></u></h3>
-      <div id="loader" class="loader"></div>
-      <ul id="list"></ul>
+        <div class="container">
+        <div class="input-group mb-2">
+        <button
+        class="btn form-control btn-outline-secondary"
+                onclick="showTasks('subs')"
+      >
+        משימות - הקלטות חדשות
+      </button>
+        <button
+        class="btn form-control btn-outline-secondary"
+                onclick="showTasks('create')"
+      >
+        משימות - יצירת קליפים
+      </button>
+        <button
+        class="btn form-control btn-outline-secondary"
+                onclick="showTasks('send')"
+      >
+        משימות - שליחת קליפים
+      </button>
+        
+        </div>
+        </div>
+        <div id="loader" class="loader"></div>
+        <div id="listDiv">
+        </div>
+      
         <div class="container">
         <div class="input-group mb-2">
             <span id="clipsB4" class="input-group-text"></span>
@@ -128,6 +164,13 @@
       integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
       crossorigin="anonymous"
     ></script>
+      <script>
+          var collapseElementList = [].slice.call(document.querySelectorAll('.collapse'))
+          var collapseList = collapseElementList.map(function (collapseEl) {
+        return new bootstrap.Collapse(collapseEl)
+          })
+
+      </script>
     <script src="app.js"></script>
   </body>
 </html>
