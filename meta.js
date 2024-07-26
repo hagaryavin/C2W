@@ -93,10 +93,10 @@ function getData() {
       console.log("ids:"+allRows.length+" idswclip1:"+allRowsWithClip1
                  .length+" idswclip2:"+allRowsWithClip2
                  .length+" idswfull:"+allRowsWithFull.length);
-      document.getElementById("numWithClip1").innerHTML="נשארו בהגרלה: "+allRowsWithClip1.length;
-       document.getElementById("numWithAll").innerHTML="נשארו בהגרלה: "+allRows.length;
-      document.getElementById("numWithFull").innerHTML="נשארו בהגרלה: "+allRowsWithFull.length;
-       document.getElementById("numWithClip2").innerHTML="נשארו בהגרלה: "+allRowsWithClip2.length;
+      document.getElementById("numWithClip1").innerHTML="חרוזים עם קליפ 1 שנשארו בהגרלה: "+allRowsWithClip1.length;
+       document.getElementById("numWithAll").innerHTML="חרוזים עם ID שנשארו בהגרלה: "+allRows.length;
+      document.getElementById("numWithFull").innerHTML="חרוזים עם ראיון מלא שנשארו בהגרלה: "+allRowsWithFull.length;
+       document.getElementById("numWithClip2").innerHTML="חרוזים עם קליפ 2 שנשארו בהגרלה: "+allRowsWithClip2.length;
       if(allRows.length<4||allRowsWithClip1
         .length<4||allRowsWithClip2
         .length<4||allRowsWithFull.length<4){
