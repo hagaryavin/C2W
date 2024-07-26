@@ -1,7 +1,10 @@
 var newPerson = {};
 var size = 0;
 var allPeople = [];
-var list = document.getElementById("list");
+var listSubs = document.createElement("ul");
+var listCreate= document.createElement("ul");
+var listSend= document.createElement("ul");
+var listDiv=document.getElementById("listDiv");;
 var optionList;
 var optionDiv;
 var optionBut;
@@ -411,7 +414,9 @@ function taskData() {
       if(allTasks.length===0){
         optionList.innerHTML = "אין הקלטות חדשות";
       }
-      list.append(optionList);
+      listSubs.append(optionList);
+      listCreate.append(optionList);
+      listSend.append(optionList);
     });
 }
 function sortByType(arr) {
@@ -457,8 +462,8 @@ function createTasks() {
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
         optionDiv.append(optionBut);
-      list.append(optionDiv);
-      list.append(document.createElement("br"));
+      listCreate.append(optionDiv);
+      listCreate.append(document.createElement("br"));
       size++;
     }
     if (allTasks[i].type === "clip1send") {
@@ -479,8 +484,8 @@ function createTasks() {
       optionList.innerHTML ="לשלוח קליפ 1 ל"+allTasks[i].name + " - " + recDate +" - "+chainName;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
-      list.append(optionDiv);
-      list.append(document.createElement("br"));
+      listSend.append(optionDiv);
+      listSend.append(document.createElement("br"));
       size++;
     }
     if (allTasks[i].type === "clip2send") {
@@ -502,8 +507,8 @@ function createTasks() {
       optionList.innerHTML ="לשלוח קליפ 2 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 1 נשלח - "+firstSendDay;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
-      list.append(optionDiv);
-      list.append(document.createElement("br"));
+      listSend.append(optionDiv);
+      listSend.append(document.createElement("br"));
       size++;
     }
     if (allTasks[i].type === "subs") {
@@ -524,8 +529,8 @@ function createTasks() {
       optionList.innerHTML =allTasks[i].name + " - " + recDate +" - לחתוך LIVE + כתוביות (ראיון, 555, שורט) + להוריד שורט למחשב - "+chainName;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
-      list.append(optionDiv);
-      list.append(document.createElement("br"));
+      listSubs.append(optionDiv);
+      listSubs.append(document.createElement("br"));
       size++;
     }
     if (allTasks[i].type === "clip3send") {
@@ -547,10 +552,28 @@ function createTasks() {
       optionList.innerHTML ="לשלוח קליפ 3 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 2 נשלח - "+secondSendDay;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
-      list.append(optionDiv);
-      list.append(document.createElement("br"));
+      listSend.append(optionDiv);
+      listSend.append(document.createElement("br"));
       size++;
     }
+  }
+}
+
+function showTasks(id){
+    removeAllChildNodes(listDiv);
+    if(id==="subs"){
+        listDiv.append(listSubs);
+    }
+    if(id==="create"){
+        listDiv.append(listCreate);
+    }
+    if(id==="send"){
+        listDiv.append(listSend);
+    }
+}
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
   }
 }
 setTimeout(() => {
