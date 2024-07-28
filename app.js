@@ -579,6 +579,7 @@ function removeAllChildNodes(parent) {
 setTimeout(() => {
   const loader = document.getElementById("loader");
   loader.style.display = "none";
+  showTasks("subs");
 }, 2050);
 function taskAlreadyExist(task) {
    
