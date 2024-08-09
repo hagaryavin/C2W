@@ -24,6 +24,10 @@ var allRows=[];
 var allRowsWithClip1=[];
 var allRowsWithClip2=[];
 var allRowsWithFull=[];
+var allRowsTotal=0;
+var allRowsWithClip1total=0;
+var allRowsWithClip2total=0;
+var allRowsWithFullTotal=0;
 var crewDataURL =
   "https://script.google.com/macros/s/AKfycbz7IgSM1Rhei0PPSgEHwxD_YHtyevYhZt32Mje9asUeGE20_J8a59XYw0xNFJMxjDKXKA/exec";
 getData();
@@ -72,6 +76,18 @@ function getData() {
           peopleOptions.append(personOption);
         }
           reallyAllPeople.push(newPerson);
+          if(newPerson.id!==""){
+              allRowsTotal++;
+          }
+          if(newPerson.clip1!==""){
+              allRowsWithClip1total++;
+          }
+          if(newPerson.clip2!==""){
+              allRowsWithClip2total++;
+          }
+          if(newPerson.linkfull!==""){
+              allRowsWithFullTotal++;
+          }
           if(newPerson.id!==""&&newPerson.meta===""&&newPerson.outofmeta===""){
             allPeople.push(newPerson);
             console.log(allPeople[size]);
@@ -93,10 +109,10 @@ function getData() {
       console.log("ids:"+allRows.length+" idswclip1:"+allRowsWithClip1
                  .length+" idswclip2:"+allRowsWithClip2
                  .length+" idswfull:"+allRowsWithFull.length);
-      document.getElementById("numWithClip1").innerHTML="חרוזים עם קליפ 1 שנשארו בהגרלה: "+allRowsWithClip1.length;
-       document.getElementById("numWithAll").innerHTML="חרוזים עם ID שנשארו בהגרלה: "+allRows.length;
-      document.getElementById("numWithFull").innerHTML="חרוזים עם ראיון מלא שנשארו בהגרלה: "+allRowsWithFull.length;
-       document.getElementById("numWithClip2").innerHTML="חרוזים עם קליפ 2 שנשארו בהגרלה: "+allRowsWithClip2.length;
+      document.getElementById("numWithClip1").innerHTML="חרוזים עם קליפ 1 שנשארו בהגרלה: "+allRowsWithClip1.length+" (מתוך "+allRowsWithClip1total+")";
+       document.getElementById("numWithAll").innerHTML="חרוזים עם ID שנשארו בהגרלה: "+allRows.length+" (מתוך "+allRowsTotal+")";
+      document.getElementById("numWithFull").innerHTML="חרוזים עם ראיון מלא שנשארו בהגרלה: "+allRowsWithFull.length+" (מתוך "+allRowsWithFullTotal+")";
+       document.getElementById("numWithClip2").innerHTML="חרוזים עם קליפ 2 שנשארו בהגרלה: "+allRowsWithClip2.length+" (מתוך "+allRowsWithClip2total+")";
       if(allRows.length<4||allRowsWithClip1
         .length<4||allRowsWithClip2
         .length<4||allRowsWithFull.length<4){
