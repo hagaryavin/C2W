@@ -31,7 +31,7 @@ var allRowsWithFullTotal=0;
 var crewDataURL =
   "https://script.google.com/macros/s/AKfycbz7IgSM1Rhei0PPSgEHwxD_YHtyevYhZt32Mje9asUeGE20_J8a59XYw0xNFJMxjDKXKA/exec";
 getData();
-const date = new Date();
+const date = changeTimeZone(new Date(), 'Asia/Jerusalem');
 var day = date.getDate();
 var month = date.getMonth() + 1;
 document.getElementById("meta").style.visibility = "hidden";
@@ -597,4 +597,10 @@ function copy(id) {
     sendData(temp, document.getElementById("meta")); 
     
   document.getElementById(id+"Copy").innerHTML="הועתק";
+}
+function changeTimeZone(date, timeZone) {
+  if (typeof date === 'string') {
+    return new Date(new Date(date).toLocaleString('en-US', { timeZone }));
+  }
+  return new Date(date.toLocaleString('en-US', { timeZone }));
 }
