@@ -1,6 +1,7 @@
 var newPerson = {};
 var size = 0;
 var allPeople = [];
+var allPeopleEng = [];
 var listSubs = document.createElement("ul");
 var listCreate= document.createElement("ul");
 var listSend= document.createElement("ul");
@@ -18,15 +19,19 @@ var secondSendDay;
 var tableRow = 2;
 var newTask = {};
 var allTasks = [];
+var allTasksEng = [];
 var tasks4lols = [];
+var tasks4lolsEng = [];
 var tasks4person;
+var tasks4personEng;
 var clipsToChange=0;
 var tasks4personB4 = {};
+var tasks4personB4Eng = {};
 const url =
   "https://script.google.com/macros/s/AKfycbzojs9dIr-pr54z2zCEXxklX5h1wIRBHt1ktH8Wwg9KC62R4iDaaCftIK7rHJzrjC3nVQ/exec";
 const taskurl =
   "https://script.google.com/macros/s/AKfycby17a_vfiR8IXwkNb8Uk2ZxAet_I1qkJd6y9n_nZRfl2S5-6pad8EmH9GyxRB0WrO78Aw/exec";
-var today = new Date();
+var today = changeTimeZone(new Date(), 'Asia/Jerusalem');
 var todaysDay = today.getDate();
 var todaysMonth = today.getMonth() + 1;
 var todaysCurrentDate = todaysDay + "." + todaysMonth;
@@ -69,26 +74,22 @@ function getData() {
         }
         if (ele.fixedchain !== "") newPerson.chain = ele.fixedchain;  
         if (ele.recordingdate !== "")
-          newPerson.recordingdate = new Date(ele.recordingdate);
+            newPerson.recordingdate = changeTimeZone(new Date(ele.recordingdate), 'Asia/Jerusalem');
         if (ele.nextrecdate !== "")
-          newPerson.nextrecdate = new Date(ele.nextrecdate);
+          newPerson.nextrecdate = changeTimeZone(new Date(ele.nextrecdate), 'Asia/Jerusalem');
         if (ele.fixedrecordingdate !== "")
-          newPerson.recordingdate = new Date(ele.fixedrecordingdate);
+          newPerson.recordingdate = changeTimeZone(new Date(ele.fixedrecordingdate), 'Asia/Jerusalem');
         if (ele.clip1date !== "")
-          newPerson.clip1sent = new Date(ele.clip1date);
+          newPerson.clip1sent = changeTimeZone(ele.clip1date), 'Asia/Jerusalem');
         if (ele.clip2date !== "")
-          newPerson.clip2sent = new Date(ele.clip2date);
+          newPerson.clip2sent = changeTimeZone(new Date(ele.clip2date), 'Asia/Jerusalem');
         if(ele.name==="הגר יבין"){
             clipsToChange=ele.fixedphone;
             document.getElementById("clipsB4").innerHTML=clipsToChange+" קליפים חדשים להפוך לשורטים";
         }
         if (newPerson.recordingdate !== "") {
-          newPerson.clipscreatedate = new Date(
-            clipsCreateDate(newPerson.recordingdate)
-          );
-          newPerson.subsdate = new Date(
-            subsDate(newPerson.recordingdate)
-          );    
+          newPerson.clipscreatedate = changeTimeZone(new Date(clipsCreateDate(newPerson.recordingdate)), 'Asia/Jerusalem');
+          newPerson.subsdate =changeTimeZone(new Date(subsDate(newPerson.recordingdate)), 'Asia/Jerusalem');
           day = newPerson.recordingdate.getDate();
           month = newPerson.recordingdate.getMonth() + 1;
           recDate = day + "." + month;
@@ -149,9 +150,7 @@ function getData() {
           allPeople.push(newPerson);
         }
         if (newPerson.nextrecdate !== "") {
-          newPerson.clip1senddate = new Date(
-            clip1sendDate(newPerson.nextrecdate)
-          );
+          newPerson.clip1senddate = changeTimeZone(new Date(clip1sendDate(newPerson.nextrecdate)), 'Asia/Jerusalem');
           day = newPerson.recordingdate.getDate();
           month = newPerson.recordingdate.getMonth() + 1;
           recDate = day + "." + month;
@@ -186,9 +185,7 @@ function getData() {
           allPeople.push(newPerson);
         }
         if (newPerson.clip1sent !== "") {
-          newPerson.clip2senddate = new Date(
-            clip2sendDate(newPerson.clip1sent)
-          );
+          newPerson.clip2senddate = changeTimeZone(new Date(clip2sendDate(newPerson.clip1sent)), 'Asia/Jerusalem');
           day = newPerson.recordingdate.getDate();
           month = newPerson.recordingdate.getMonth() + 1;
           recDate = day + "." + month;
@@ -222,9 +219,7 @@ function getData() {
           allPeople.push(newPerson);
         }
         if (newPerson.clip2sent !== "") {
-          newPerson.clip3senddate = new Date(
-            clip3sendDate(newPerson.clip2sent)
-          );
+          newPerson.clip3senddate = changeTimeZone(new Date(clip3sendDate(newPerson.clip2sent)), 'Asia/Jerusalem');
           day = newPerson.recordingdate.getDate();
           month = newPerson.recordingdate.getMonth() + 1;
           recDate = day + "." + month;
@@ -720,19 +715,19 @@ function sendData2(obj, ele) {
 }
 
 function subsDate(date) {
-    var next = new Date(date.getTime());
+    var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
     next.setDate(date.getDate() + 1);
     next.setHours(0, 0, 0);
     return next;
 }
 function clipsCreateDate(date) {
-  var next = new Date(date.getTime());
+  var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
   next.setDate(date.getDate() + 2);
   next.setHours(0, 0, 0);
   return next;
 }
 function clip1sendDate(date) {
-  var next = new Date(date.getTime());
+  var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
   next.setDate(date.getDate() + 7);
   if (next.getDay() === 6) {
     next.setDate(date.getDate() + 8);
@@ -741,7 +736,7 @@ function clip1sendDate(date) {
   return next;
 }
 function clip2sendDate(date) {
-  var next = new Date(date.getTime());
+  var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
   next.setDate(date.getDate() + 30);
   if (next.getDay() === 6) {
     next.setDate(date.getDate() + 31);
@@ -750,11 +745,17 @@ function clip2sendDate(date) {
   return next;
 }
 function clip3sendDate(date) {
-  var next = new Date(date.getTime());
+  var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
   next.setDate(date.getDate() + 30);
   if (next.getDay() === 6) {
     next.setDate(date.getDate() + 31);
   }
   next.setHours(0, 0, 0);
   return next;
+}
+function changeTimeZone(date, timeZone) {
+  if (typeof date === 'string') {
+    return new Date(new Date(date).toLocaleString('en-US', { timeZone }));
+  }
+  return new Date(date.toLocaleString('en-US', { timeZone }));
 }
