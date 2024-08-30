@@ -6,7 +6,7 @@ var currPerson = {};
 var copyBtns=document.getElementsByClassName("copycat");
 var size = 0;
 var ChosenCol=0;
-const date = new Date();
+const date = changeTimeZone(new Date(), 'Asia/Jerusalem');
 var day = date.getDate();
 var month = date.getMonth() + 1;
 document.getElementById("clip1date").value= day + "." + month;
@@ -59,17 +59,17 @@ function getData() {
         if (ele.fixedchain !== "") newPerson.chain = ele.fixedchain;
         if (ele.fixedemail !== "") newPerson.email = ele.fixedemail;
         if (ele.clip1date !== "")
-          newPerson.clip1date = new Date(ele.clip1date);
+          newPerson.clip1date = changeTimeZone(new Date(ele.clip1date), 'Asia/Jerusalem');
         if (ele.clip2date !== "")
-          newPerson.clip2date = new Date(ele.clip2date);
+          newPerson.clip2date = changeTimeZone(new Date(ele.clip2date), 'Asia/Jerusalem');
         if (ele.clip3date !== "")
-          newPerson.clip3date = new Date(ele.clip3date);
+          newPerson.clip3date = changeTimeZone(new Date(ele.clip3date), 'Asia/Jerusalem');
         if (ele.clip4date !== "")
-          newPerson.clip4date = new Date(ele.clip4date);
+          newPerson.clip4date = changeTimeZone(new Date(ele.clip4date), 'Asia/Jerusalem');
         if (ele.clip5date !== "")
-          newPerson.clip5date = new Date(ele.clip5date);
+          newPerson.clip5date = changeTimeZone(new Date(ele.clip5date), 'Asia/Jerusalem');
         if (ele.clip6date !== "")
-          newPerson.clip6date = new Date(ele.clip6date);
+          newPerson.clip6date = changeTimeZone(new Date(ele.clip6date), 'Asia/Jerusalem');
         allPeople.push(newPerson);
         console.log(allPeople[size]);
         personOption = document.createElement("option");
@@ -343,4 +343,10 @@ function sendData(obj, ele) {
       console.log(json);
     });
   
+}
+function changeTimeZone(date, timeZone) {
+  if (typeof date === 'string') {
+    return new Date(new Date(date).toLocaleString('en-US', { timeZone }));
+  }
+  return new Date(date.toLocaleString('en-US', { timeZone }));
 }
