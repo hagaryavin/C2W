@@ -14,7 +14,7 @@ var currClipNum=1;
 var currClipLink="";
 var currtextType=1;
 var wannaFixGuestPhone = true;
-const date = new Date();
+const date = changeTimeZone(new Date(), 'Asia/Jerusalem');
 var day = date.getDate();
 var month = date.getMonth() + 1;
 var year = date.getFullYear();
@@ -408,7 +408,7 @@ function fixFirstName(fullName) {
     splittedName[0] === "דוקטור" ||
     splittedName[0] === "פרופסור" ||
     splittedName[0] === "פרופ'" ||
-    splittedName[0] === "Dr."||
+    splittedName[0] === "Dr." ||
      splittedName[0] === "הרב" ||
      splittedName[0] === "ד״ר" 
   ) {
@@ -519,5 +519,11 @@ function sendData(obj, ele) {
       console.log(json);
     });
   
+}
+function changeTimeZone(date, timeZone) {
+  if (typeof date === 'string') {
+    return new Date(new Date(date).toLocaleString('en-US', { timeZone }));
+  }
+  return new Date(date.toLocaleString('en-US', { timeZone }));
 }
 
