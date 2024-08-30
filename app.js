@@ -80,7 +80,7 @@ function getData() {
         if (ele.fixedrecordingdate !== "")
           newPerson.recordingdate = changeTimeZone(new Date(ele.fixedrecordingdate), 'Asia/Jerusalem');
         if (ele.clip1date !== "")
-          newPerson.clip1sent = changeTimeZone(ele.clip1date), 'Asia/Jerusalem');
+          newPerson.clip1sent = changeTimeZone(new Date(ele.clip1date), 'Asia/Jerusalem');
         if (ele.clip2date !== "")
           newPerson.clip2sent = changeTimeZone(new Date(ele.clip2date), 'Asia/Jerusalem');
         if(ele.name==="הגר יבין"){
