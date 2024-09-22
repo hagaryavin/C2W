@@ -476,7 +476,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "clip1send" + allTasks[i].row;
-      optionList.innerHTML ="לשלוח פידבק - קליפ 1 ל"+allTasks[i].name + " - " + recDate +" - "+chainName;
+      optionList.innerHTML ="לשלוח פידבק + קליפ 1 ל"+allTasks[i].name + " - " + recDate +" - "+chainName;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       listSend.append(optionDiv);
@@ -499,7 +499,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "clip2send" + allTasks[i].row;
-      optionList.innerHTML ="לשלוח פרגון - קליפ 2 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 1 נשלח - "+firstSendDay;
+      optionList.innerHTML ="לשלוח פרגון + קליפ 2 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 1 נשלח - "+firstSendDay;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       listSend.append(optionDiv);
@@ -544,7 +544,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "clip3send" + allTasks[i].row;
-      optionList.innerHTML ="לשלוח הדרכה - קליפ 3 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 2 נשלח - "+secondSendDay;
+      optionList.innerHTML ="לשלוח הדרכה + קליפ 3 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 2 נשלח - "+secondSendDay;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       listSend.append(optionDiv);
