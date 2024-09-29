@@ -1,6 +1,7 @@
 var allPeople = [];
 var reallyAllPeople = [];
 var rowCount = 2;
+var rowCountEng=2;
 var peopleOptions0 = document.getElementById("people0");
 var peopleOptions = document.getElementById("people");
 document.getElementById("reels").style.visibility = "hidden";
@@ -8,6 +9,7 @@ var personOption;
 var size = 0;
 const url =
   "https://script.google.com/macros/s/AKfycbzXoN1d21aGDuS7dUEj9vz6v952hwbKmueQaPdJ20QbrDkH9X6485Vh2IxnYgTbVBR7kA/exec";
+const urlEng="https://script.google.com/macros/s/AKfycbyYASxRIl0jbkL5vINcjk7lrXpdmrV2B3dtFI7s0k-x966yo7wx0ENxdyjplJUZz09TYA/exec";
 var newPerson = {};
 var currPerson = [[],[],[],[]];
 var messes = [
@@ -31,6 +33,7 @@ var allRowsWithFullTotal=0;
 var crewDataURL =
   "https://script.google.com/macros/s/AKfycbz7IgSM1Rhei0PPSgEHwxD_YHtyevYhZt32Mje9asUeGE20_J8a59XYw0xNFJMxjDKXKA/exec";
 getData();
+getDataEng();
 const date = changeTimeZone(new Date(), 'Asia/Jerusalem');
 var day = date.getDate();
 var month = date.getMonth() + 1;
@@ -91,15 +94,15 @@ function getData() {
           if(newPerson.id!==""&&newPerson.meta===""&&newPerson.outofmeta===""){
             allPeople.push(newPerson);
             console.log(allPeople[size]);
-              allRows.push(newPerson.row);
+              allRows.push({row:newPerson.row, id:newPerson.id,lang:"heb"});
               if(newPerson.clip1!==""){
-                  allRowsWithClip1.push(newPerson.row);
+                  allRowsWithClip1.push({row:newPerson.row, id:newPerson.id,lang:"heb"});
               }
                if(newPerson.clip2!==""){
-                  allRowsWithClip2.push(newPerson.row);
+                  allRowsWithClip2.push({row:newPerson.row, id:newPerson.id,lang:"heb"});
               }
               if(newPerson.linkfull!==""){
-                  allRowsWithFull.push(newPerson.row);
+                  allRowsWithFull.push({row:newPerson.row, id:newPerson.id,lang:"heb"});
               }
               size++;
           }
@@ -117,7 +120,80 @@ function getData() {
         .length<4||allRowsWithClip2
         .length<4||allRowsWithFull.length<4){
           clearList();
-      }else{0
+      }else{
+        submitData();
+      }
+    });
+    rowCount = 2;
+}
+function getDataEng() {
+  fetch(urlEng)
+    .then((res) => {
+      return res.json();
+    })
+    .then((json) => {
+      json.data.forEach((ele) => {
+        newPerson = {
+          name: ele.name,
+          chain: ele.chain,
+        linkfull: ele.linkfull,
+            link555:ele.linkfive,
+            link55yt:ele.linkshortyt,
+            title: ele.topicofstory,
+            id:ele.id,
+            clip1:ele.clip1,
+            clip2:ele.clip2,
+            meta:ele.meta,
+            outofmeta:ele.outofmeta,
+            row: rowCountEng 
+        };
+        if (ele.fixedname !== "") newPerson.name = ele.fixedname;
+        if (ele.fixedtopicofstory !== "")
+          newPerson.title = ele.fixedtopicofstory;
+        if (ele.fixedchain !== "") newPerson.chain = ele.fixedchain;
+          //reallyAllPeople.push(newPerson);
+          if(newPerson.id!==""){
+              allRowsTotal++;
+          }
+          if(newPerson.clip1!==""){
+              allRowsWithClip1total++;
+          }
+          if(newPerson.clip2!==""){
+              allRowsWithClip2total++;
+          }
+          if(newPerson.linkfull!==""){
+              allRowsWithFullTotal++;
+          }
+          if(newPerson.id!==""&&newPerson.meta===""){
+            allPeople.push(newPerson);
+            console.log(allPeople[size]);
+              allRows.push({row:newPerson.row, id:newPerson.id,lang:"eng"});
+              if(newPerson.clip1!==""){
+                  allRowsWithClip1.push({row:newPerson.row, id:newPerson.id,lang:"eng"});
+              }
+               if(newPerson.clip2!==""){
+                  allRowsWithClip2.push({row:newPerson.row, id:newPerson.id,lang:"eng"});
+              }
+              if(newPerson.linkfull!==""){
+                  allRowsWithFull.push({row:newPerson.row, id:newPerson.id,lang:"eng"});
+              }
+              size++;
+          }
+          rowCountEng++;
+      });
+        console.log("rceng:"+rowCountEng+" size:"+size);
+      console.log("ids:"+allRows.length+" idswclip1:"+allRowsWithClip1
+                 .length+" idswclip2:"+allRowsWithClip2
+                 .length+" idswfull:"+allRowsWithFull.length);
+      document.getElementById("numWithClip1").innerHTML="חרוזים עם קליפ 1 שנשארו בהגרלה: "+allRowsWithClip1.length+" (מתוך "+allRowsWithClip1total+")";
+       document.getElementById("numWithAll").innerHTML="חרוזים עם ID שנשארו בהגרלה: "+allRows.length+" (מתוך "+allRowsTotal+")";
+      document.getElementById("numWithFull").innerHTML="חרוזים עם ראיון מלא שנשארו בהגרלה: "+allRowsWithFull.length+" (מתוך "+allRowsWithFullTotal+")";
+       document.getElementById("numWithClip2").innerHTML="חרוזים עם קליפ 2 שנשארו בהגרלה: "+allRowsWithClip2.length+" (מתוך "+allRowsWithClip2total+")";
+      if(allRows.length<4||allRowsWithClip1
+        .length<4||allRowsWithClip2
+        .length<4||allRowsWithFull.length<4){
+          clearList();
+      }else{
         submitData();
       }
     });
@@ -398,7 +474,8 @@ document.getElementById("meta").style.visibility = "hidden";
    // document.getElementById("allNamesB4").innerHTML="נבחרו: ";
   for (var i = 0; i < allPeople.length; i++) {
       for(var j=0;j<=3;j++){
-            if (allPeople[i].row === pickedRows[j]) {
+          
+            if (allPeople[i].id === pickedRows[j].id) {
                  
             document.getElementById("meta").style.visibility = "visible";
               currPerson[j] = allPeople[i];
@@ -461,6 +538,25 @@ function sendData(obj, ele) {
   formData.append("data", JSON.stringify(obj));
   console.log(obj);
   fetch(url, {
+    method: "POST",
+    body: formData,
+  })
+    .then((rep) => {
+      console.log(obj);
+      return rep.json();
+    })
+    .then((json) => {
+      console.log(obj);
+      console.log(json);
+      ele.innerHTML = json.val;
+    });
+}
+function sendDataEng(obj, ele) {
+  console.log(obj);
+  let formData = new FormData();
+  formData.append("data", JSON.stringify(obj));
+  console.log(obj);
+  fetch(urlEng, {
     method: "POST",
     body: formData,
   })
@@ -590,12 +686,15 @@ function copy(id) {
   document.body.removeChild(elem);
     const temp = {
                      text: (date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear(),
-                     row: chosenRows[id-4],
+                     row: chosenRows[id-4].row,
                      col: "meta",
                  };
-                
-    sendData(temp, document.getElementById("meta")); 
-    
+     if(chosenRows[id-4].lang==="heb"){           
+        sendData(temp, document.getElementById("meta")); 
+     }
+    if(chosenRows[id-4].lang==="eng"){           
+        sendDataEng(temp, document.getElementById("meta")); 
+     }
   document.getElementById(id+"Copy").innerHTML="הועתק";
 }
 function changeTimeZone(date, timeZone) {
