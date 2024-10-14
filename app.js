@@ -72,12 +72,12 @@ function getData() {
           }
           if (ele.chainthree !== "") newPerson.chain = ele.chainthree;
         }
-        if (ele.fixedchain !== "") newPerson.chain = ele.fixedchain;  
+        if (ele.fixedchain !== "") newPerson.chain = ele.fixedchain; 
         if (ele.recordingdate !== "")
             newPerson.recordingdate = changeTimeZone(new Date(ele.recordingdate), 'Asia/Jerusalem');
         if (ele.nextrecdate !== "")
           newPerson.nextrecdate = changeTimeZone(new Date(ele.nextrecdate), 'Asia/Jerusalem');
-        if (ele.fixedrecordingdate !== "")
+        if (ele.fixedrecordingdate !== ""&&ele.fixedrecordingdate!=="ללא תאריך")
           newPerson.recordingdate = changeTimeZone(new Date(ele.fixedrecordingdate), 'Asia/Jerusalem');
         if (ele.clip1date !== "")
           newPerson.clip1sent = changeTimeZone(new Date(ele.clip1date), 'Asia/Jerusalem');
@@ -87,7 +87,7 @@ function getData() {
             clipsToChange=ele.fixedphone;
             document.getElementById("clipsB4").innerHTML=clipsToChange+" קליפים חדשים להפוך לשורטים";
         }
-        if (newPerson.recordingdate !== "") {
+        if (newPerson.recordingdate !== ""&&ele.fixedrecordingdate!=="ללא תאריך") {
           newPerson.clipscreatedate = changeTimeZone(new Date(clipsCreateDate(newPerson.recordingdate)), 'Asia/Jerusalem');
           newPerson.subsdate =changeTimeZone(new Date(subsDate(newPerson.recordingdate)), 'Asia/Jerusalem');
           day = newPerson.recordingdate.getDate();
