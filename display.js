@@ -71,12 +71,12 @@ function getData() {
         if (ele.clip6date !== "")
           newPerson.clip6date = changeTimeZone(new Date(ele.clip6date), 'Asia/Jerusalem');
         allPeople.push(newPerson);
-        console.log(allPeople[size]);
         personOption = document.createElement("option");
         personOption.value =
           newPerson.name + " + " + fixChainFromData(newPerson.chain);
         personOption.id = rowCount;
-        if (newPerson.name !== "" || newPerson.chain !== "") {
+        if (ele.fixedrecordingdate!=="ללא תאריך"&&(newPerson.name !== "" || newPerson.chain !== "")) {
+          console.log(allPeople[size]);
           options.append(personOption);
         }
         rowCount++;
