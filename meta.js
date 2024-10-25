@@ -73,8 +73,8 @@ function getData() {
         personOption = document.createElement("option");
         personOption.value =
           newPerson.name + " + " + fixChainFromData(newPerson.chain);
-        if (newPerson.name !== "" || newPerson.chain !== "") {
-            var anotherOption=personOption;
+        if (ele.fixedrecordingdate!=="ללא תאריך"&&(newPerson.name !== "" || newPerson.chain !== "")) {
+              var anotherOption=personOption;
           peopleOptions0.append(anotherOption);
           peopleOptions.append(personOption);
         }
