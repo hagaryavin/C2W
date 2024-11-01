@@ -5,7 +5,7 @@ var allPeopleEng = [];
 var listSubs = document.createElement("ul");
 var listCreate= document.createElement("ul");
 var listSend= document.createElement("ul");
-var listDiv=document.getElementById("listDiv");;
+var listDiv=document.getElementById("listDiv");
 var optionList;
 var optionDiv;
 var optionBut;
@@ -57,6 +57,7 @@ function getData() {
             clip1sent:"",
             clip2sent:"",
             subsdate:"",
+            feedback:ele.feedback,
           link: ele.linkfull,
           row: tableRow,
             chain: ele.chain
@@ -110,6 +111,7 @@ function getData() {
               row: newPerson.row,
                 clip1date:newPerson.clip1sent,
                 clip2date:newPerson.clip2sent,
+                feedback:newPerson.feedback,
                 chain:newPerson.chain
             };
 
@@ -136,6 +138,7 @@ function getData() {
               row: newPerson.row,
                 clip1date:newPerson.clip1sent,
                 clip2date:newPerson.clip2sent,
+                 feedback:newPerson.feedback,
                 chain:newPerson.chain
             };
 
@@ -171,6 +174,7 @@ function getData() {
               row: newPerson.row,
                 clip1date:newPerson.clip1sent,
                 clip2date:newPerson.clip2sent,
+                 feedback:newPerson.feedback,
                 chain:newPerson.chain
             };
 
@@ -205,6 +209,7 @@ function getData() {
               row: newPerson.row,
                 clip1date:newPerson.clip1sent,
                 clip2date:newPerson.clip2sent,
+                feedback:newPerson.feedback,
                 chain:newPerson.chain
             };
 
@@ -239,6 +244,7 @@ function getData() {
               row: newPerson.row,
                 clip1date:newPerson.clip1sent,
                 clip2date:newPerson.clip2sent,
+                feedback:newPerson.feedback,
                 chain:newPerson.chain
             };
 
@@ -324,6 +330,7 @@ function taskData() {
             row: currPerson.row,
             clip1date:currPerson.clip1sent,
               clip2date:currPerson.clip2sent,
+              feedback:currPerson.feedback,
               chain:newPerson.chain
           };
           if (!taskAlreadyExist(newTask)) {
@@ -340,6 +347,7 @@ function taskData() {
             row: currPerson.row,
             clip1date:currPerson.clip1sent,
               clip2date:currPerson.clip2sent,
+              feedback:currPerson.feedback,
               chain:newPerson.chain
           };
           if (!taskAlreadyExist(newTask)) {
@@ -356,6 +364,7 @@ function taskData() {
             row: currPerson.row,
             clip1date:currPerson.clip1sent,
               clip2date:currPerson.clip2sent,
+               feedback:currPerson.feedback,
               chain:newPerson.chain
           };
           if (!taskAlreadyExist(newTask)) {
@@ -372,6 +381,7 @@ function taskData() {
             row: currPerson.row,
             clip1date:currPerson.clip1sent,
               clip2date:currPerson.clip2sent,
+              feedback:currPerson.feedback,
               chain:newPerson.chain
           };
           if (!taskAlreadyExist(newTask)) {
@@ -388,6 +398,7 @@ function taskData() {
             row: currPerson.row,
             clip1date:currPerson.clip1sent,
               clip2date:currPerson.clip2sent,
+              feedback:currPerson.feedback,
               chain:newPerson.chain
           };
           if (!taskAlreadyExist(newTask)) {
@@ -499,7 +510,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "clip2send" + allTasks[i].row;
-      optionList.innerHTML ="לשלוח פרגון + קליפ 2 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 1 נשלח - "+firstSendDay;
+      optionList.innerHTML ="לשלוח פרגון + קליפ 2 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 1 נשלח - "+firstSendDay+" "+allTasks[i].feedback;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       listSend.append(optionDiv);
@@ -544,7 +555,7 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "clip3send" + allTasks[i].row;
-      optionList.innerHTML ="לשלוח הדרכה + קליפ 3 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 2 נשלח - "+secondSendDay;
+      optionList.innerHTML ="לשלוח הדרכה + קליפ 3 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 2 נשלח - "+secondSendDay+" "+allTasks[i].feedback;
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       listSend.append(optionDiv);
