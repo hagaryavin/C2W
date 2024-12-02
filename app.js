@@ -25,6 +25,7 @@ var tasks4lolsEng = [];
 var tasks4person;
 var tasks4personEng;
 var clipsToChange=0;
+var indiclipsToChange=0;
 var tasks4personB4 = {};
 var tasks4personB4Eng = {};
 const url =
@@ -87,6 +88,8 @@ function getData() {
         if(ele.name==="הגר יבין"){
             clipsToChange=ele.fixedphone;
             document.getElementById("clipsB4").innerHTML=clipsToChange+" קליפים חדשים להפוך לשורטים";
+            indiclipsToChange=ele.fixedinterviewerphone;
+            document.getElementById("indiclipsB4").innerHTML=indiclipsToChange+" קליפים עצמאיים להפוך לשורטים";
         }
         if (newPerson.recordingdate !== ""&&ele.fixedrecordingdate!=="ללא תאריך") {
           newPerson.clipscreatedate = changeTimeZone(new Date(clipsCreateDate(newPerson.recordingdate)), 'Asia/Jerusalem');
@@ -687,17 +690,27 @@ function fixChainFromData(chain) {
   return chain;
 }
 
-function changeClips() {
-    var textEntered=document.getElementById("clips").value;
-    console.log("clipsB4: "+clipsToChange);
-    var dataElement=document.getElementById("clipsChange");
-     var chosenCol="guestphone";
+function changeClips(id) {
+     var chosenCol=id;
+    
+    if(id==="guestphone"){
+        var textEntered=document.getElementById("clips").value;
+        console.log("clipsB4: "+clipsToChange);
+        var dataElement=document.getElementById("clipsChange");
+        var ogSum=clipsToChange;
+    }
+    if(id==="interphone"){
+        var textEntered=document.getElementById("indiclips").value;
+        console.log("indiclipsB4: "+clipsToChange);
+        var dataElement=document.getElementById("indiclipsChange");
+        var ogSum=indiclipsToChange;
+    }
       console.log("col: " + chosenCol);
     if(textEntered===""){
         textEntered=0;
     }
           var temp = {
-            text: parseInt(parseInt(textEntered)+parseInt(clipsToChange)),
+            text: parseInt(parseInt(textEntered)+parseInt(ogSum)),
             row: 97,
             col: chosenCol,
           };
