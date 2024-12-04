@@ -754,7 +754,7 @@ function clip1sendDate(date) {
   var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
   next.setDate(date.getDate() + 7);
   if (next.getDay() === 6) {
-    next.setDate(date.getDate() + 8);
+    next.setDate(next.getDate() + 1);
   }
   next.setHours(0, 0, 0);
   return next;
@@ -763,7 +763,7 @@ function clip2sendDate(date) {
   var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
   next.setDate(date.getDate() + 30);
   if (next.getDay() === 6) {
-    next.setDate(date.getDate() + 31);
+    next.setDate(next.getDate() + 1);
   }
   next.setHours(0, 0, 0);
   return next;
@@ -772,7 +772,7 @@ function clip3sendDate(date) {
   var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
   next.setDate(date.getDate() + 30);
   if (next.getDay() === 6) {
-    next.setDate(date.getDate() + 31);
+    next.setDate(next.getDate() + 1);
   }
   next.setHours(0, 0, 0);
   return next;
