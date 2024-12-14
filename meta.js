@@ -25,10 +25,18 @@ var fullTexts = [[], [], [], [],[],[],[],[]];
 var allRows=[];
 var allRowsWithClip1=[];
 var allRowsWithClip2=[];
+var allRowsWithClip3=[];
+var allRowsWithClip4=[];
+var allRowsWithClip5=[];
+var allRowsWithClip6=[];
 var allRowsWithFull=[];
 var allRowsTotal=0;
 var allRowsWithClip1total=0;
 var allRowsWithClip2total=0;
+var allRowsWithClip3total=0;
+var allRowsWithClip4total=0;
+var allRowsWithClip5total=0;
+var allRowsWithClip6total=0;
 var allRowsWithFullTotal=0;
 var crewDataURL =
   "https://script.google.com/macros/s/AKfycbz7IgSM1Rhei0PPSgEHwxD_YHtyevYhZt32Mje9asUeGE20_J8a59XYw0xNFJMxjDKXKA/exec";
@@ -56,8 +64,14 @@ function getData() {
             id:ele.id,
             clip1:ele.clip1,
             clip2:ele.clip2,
+            clip3:ele.clip3,
+            clip4:ele.clip4,
+            clip5:ele.clip5,
+            clip6:ele.clip6,
             meta:ele.meta,
             outofmeta:ele.outofmeta,
+            clipsAmount:0,
+            timesSent:0,
             row: rowCount 
         };
         if (ele.fixedname !== "") newPerson.name = ele.fixedname;
@@ -88,34 +102,86 @@ function getData() {
           if(newPerson.clip2!==""){
               allRowsWithClip2total++;
           }
+          if(newPerson.clip3!==""){
+              allRowsWithClip3total++;
+          }
+          if(newPerson.clip4!==""){
+              allRowsWithClip4total++;
+          }
+          if(newPerson.clip5!==""){
+              allRowsWithClip5total++;
+          }
+          if(newPerson.clip6!==""){
+              allRowsWithClip6total++;
+          }
           if(newPerson.linkfull!==""){
               allRowsWithFullTotal++;
           }
-          if(newPerson.id!==""&&newPerson.meta===""&&newPerson.outofmeta===""){
+          if(ele.clip1!==""){
+              newPerson.clipsAmount++;
+          }
+          if(ele.clip2!==""){
+              newPerson.clipsAmount++;
+          }
+          if(ele.clip3!==""){
+              newPerson.clipsAmount++;
+          }
+          if(ele.clip4!==""){
+              newPerson.clipsAmount++;
+          }
+          if(ele.clip5!==""){
+              newPerson.clipsAmount++;
+          }
+          if(ele.clip6!==""){
+              newPerson.clipsAmount++;
+          }
+          if(newPerson.meta!==""){
+              for(var j=0;j<newPerson.meta.length;j++){
+                if (newPerson.meta[j] === ',') {
+                    newPerson.timesSent++;
+                }
+              }
+          }
+          if(newPerson.id!==""&&((newPerson.timesSent!==newPerson.clipsAmount&&newPerson.clipsAmount!==0)||newPerson.meta==="")&&newPerson.outofmeta===""){
             allPeople.push(newPerson);
             console.log(allPeople[size]);
               allRows.push({row:newPerson.row, id:newPerson.id,lang:"heb"});
               if(newPerson.clip1!==""){
-                  allRowsWithClip1.push({row:newPerson.row, id:newPerson.id,lang:"heb"});
+                  allRowsWithClip1.push({row:newPerson.row, id:newPerson.id,lang:"heb",meta:newPerson.meta});
               }
                if(newPerson.clip2!==""){
-                  allRowsWithClip2.push({row:newPerson.row, id:newPerson.id,lang:"heb"});
+                  allRowsWithClip2.push({row:newPerson.row, id:newPerson.id,lang:"heb",meta:newPerson.meta});
+              }
+             if(newPerson.clip3!==""){
+                  allRowsWithClip3.push({row:newPerson.row, id:newPerson.id,lang:"heb",meta:newPerson.meta});
+              }
+               if(newPerson.clip4!==""){
+                  allRowsWithClip4.push({row:newPerson.row, id:newPerson.id,lang:"heb",meta:newPerson.meta});
+              }
+               if(newPerson.clip5!==""){
+                  allRowsWithClip5.push({row:newPerson.row, id:newPerson.id,lang:"heb",meta:newPerson.meta});
+              }
+               if(newPerson.clip6!==""){
+                  allRowsWithClip6.push({row:newPerson.row, id:newPerson.id,lang:"heb",meta:newPerson.meta});
               }
               if(newPerson.linkfull!==""){
-                  allRowsWithFull.push({row:newPerson.row, id:newPerson.id,lang:"heb"});
+                  allRowsWithFull.push({row:newPerson.row, id:newPerson.id,lang:"heb",meta:newPerson.meta});
               }
               size++;
           }
           rowCount++;
       });
         console.log("rc:"+rowCount+" size:"+size);
-      console.log("ids:"+allRows.length+" idswclip1:"+allRowsWithClip1
-                 .length+" idswclip2:"+allRowsWithClip2
-                 .length+" idswfull:"+allRowsWithFull.length);
+      console.log("ids:"+allRows.length+" idswclip1:"+allRowsWithClip1.length+" idswclip2:"+allRowsWithClip2.length+" idswclip3:"+allRowsWithClip3.length+" idswclip4:"+allRowsWithClip4.length+" idswclip5:"+allRowsWithClip5.length+" idswclip6:"+allRowsWithClip6.length+" idswfull:"+allRowsWithFull.length);
       document.getElementById("numWithClip1").innerHTML="חרוזים עם קליפ 1 שנשארו בהגרלה: "+allRowsWithClip1.length+" (מתוך "+allRowsWithClip1total+")";
+      document.getElementById("numWithClip2").innerHTML="חרוזים עם קליפ 2 שנשארו בהגרלה: "+allRowsWithClip2.length+" (מתוך "+allRowsWithClip2total+")";
+      document.getElementById("numWithClip3").innerHTML="חרוזים עם קליפ 3 שנשארו בהגרלה: "+allRowsWithClip3.length+" (מתוך "+allRowsWithClip3total+")";
+      document.getElementById("numWithClip4").innerHTML="חרוזים עם קליפ 4 שנשארו בהגרלה: "+allRowsWithClip4.length+" (מתוך "+allRowsWithClip4total+")";
+      document.getElementById("numWithClip5").innerHTML="חרוזים עם קליפ 5 שנשארו בהגרלה: "+allRowsWithClip5.length+" (מתוך "+allRowsWithClip5total+")";
+      document.getElementById("numWithClip6").innerHTML="חרוזים עם קליפ 6 שנשארו בהגרלה: "+allRowsWithClip6.length+" (מתוך "+allRowsWithClip6total+")";
        document.getElementById("numWithAll").innerHTML="חרוזים עם ID שנשארו בהגרלה: "+allRows.length+" (מתוך "+allRowsTotal+")";
       document.getElementById("numWithFull").innerHTML="חרוזים עם ראיון מלא שנשארו בהגרלה: "+allRowsWithFull.length+" (מתוך "+allRowsWithFullTotal+")";
-       document.getElementById("numWithClip2").innerHTML="חרוזים עם קליפ 2 שנשארו בהגרלה: "+allRowsWithClip2.length+" (מתוך "+allRowsWithClip2total+")";
+       
       if(allRows.length<4||allRowsWithClip1
         .length<4||allRowsWithClip2
         .length<4||allRowsWithFull.length<4){
@@ -143,8 +209,14 @@ function getDataEng() {
             id:ele.id,
             clip1:ele.clip1,
             clip2:ele.clip2,
+            clip3:ele.clip3,
+            clip4:ele.clip4,
+            clip5:ele.clip5,
+            clip6:ele.clip6,
             meta:ele.meta,
             outofmeta:ele.outofmeta,
+            clipsAmount:0,
+            timesSent:0,
             row: rowCountEng 
         };
         if (ele.fixedname !== "") newPerson.name = ele.fixedname;
@@ -161,34 +233,85 @@ function getDataEng() {
           if(newPerson.clip2!==""){
               allRowsWithClip2total++;
           }
+          if(newPerson.clip3!==""){
+              allRowsWithClip3total++;
+          }
+          if(newPerson.clip4!==""){
+              allRowsWithClip4total++;
+          }
+          if(newPerson.clip5!==""){
+              allRowsWithClip5total++;
+          }
+          if(newPerson.clip6!==""){
+              allRowsWithClip6total++;
+          }
           if(newPerson.linkfull!==""){
               allRowsWithFullTotal++;
           }
-          if(newPerson.id!==""&&newPerson.meta===""){
+         if(ele.clip1!==""){
+              newPerson.clipsAmount++;
+          }
+          if(ele.clip2!==""){
+              newPerson.clipsAmount++;
+          }
+          if(ele.clip3!==""){
+              newPerson.clipsAmount++;
+          }
+          if(ele.clip4!==""){
+              newPerson.clipsAmount++;
+          }
+          if(ele.clip5!==""){
+              newPerson.clipsAmount++;
+          }
+          if(ele.clip6!==""){
+              newPerson.clipsAmount++;
+          }
+          if(newPerson.meta!==""){
+              for(var j=0;j<newPerson.meta.length;j++){
+                if (newPerson.meta[j] === ',') {
+                    newPerson.timesSent++;
+                }
+              }
+          }
+          if(newPerson.id!==""&&((newPerson.timesSent!==newPerson.clipsAmount&&newPerson.clipsAmount!==0)||newPerson.meta==="")){
             allPeople.push(newPerson);
             console.log(allPeople[size]);
               allRows.push({row:newPerson.row, id:newPerson.id,lang:"eng"});
               if(newPerson.clip1!==""){
-                  allRowsWithClip1.push({row:newPerson.row, id:newPerson.id,lang:"eng"});
+                  allRowsWithClip1.push({row:newPerson.row, id:newPerson.id,lang:"eng",meta:newPerson.meta});
               }
                if(newPerson.clip2!==""){
-                  allRowsWithClip2.push({row:newPerson.row, id:newPerson.id,lang:"eng"});
+                  allRowsWithClip2.push({row:newPerson.row, id:newPerson.id,lang:"eng",meta:newPerson.meta});
+              }
+              if(newPerson.clip3!==""){
+                  allRowsWithClip3.push({row:newPerson.row, id:newPerson.id,lang:"eng",meta:newPerson.meta});
+              }
+               if(newPerson.clip4!==""){
+                  allRowsWithClip4.push({row:newPerson.row, id:newPerson.id,lang:"eng",meta:newPerson.meta});
+              }
+              if(newPerson.clip5!==""){
+                  allRowsWithClip5.push({row:newPerson.row, id:newPerson.id,lang:"eng",meta:newPerson.meta});
+              }
+               if(newPerson.clip6!==""){
+                  allRowsWithClip6.push({row:newPerson.row, id:newPerson.id,lang:"eng",meta:newPerson.meta});
               }
               if(newPerson.linkfull!==""){
-                  allRowsWithFull.push({row:newPerson.row, id:newPerson.id,lang:"eng"});
+                  allRowsWithFull.push({row:newPerson.row, id:newPerson.id,lang:"eng",meta:newPerson.meta});
               }
               size++;
           }
           rowCountEng++;
       });
         console.log("rceng:"+rowCountEng+" size:"+size);
-      console.log("ids:"+allRows.length+" idswclip1:"+allRowsWithClip1
-                 .length+" idswclip2:"+allRowsWithClip2
-                 .length+" idswfull:"+allRowsWithFull.length);
+      console.log("ids:"+allRows.length+" idswclip1:"+allRowsWithClip1.length+" idswclip2:"+allRowsWithClip2.length+" idswclip3:"+allRowsWithClip3.length+" idswclip4:"+allRowsWithClip4.length+" idswclip5:"+allRowsWithClip5.length+" idswclip6:"+allRowsWithClip6.length+" idswfull:"+allRowsWithFull.length);
       document.getElementById("numWithClip1").innerHTML="חרוזים עם קליפ 1 שנשארו בהגרלה: "+allRowsWithClip1.length+" (מתוך "+allRowsWithClip1total+")";
+      document.getElementById("numWithClip2").innerHTML="חרוזים עם קליפ 2 שנשארו בהגרלה: "+allRowsWithClip2.length+" (מתוך "+allRowsWithClip2total+")";
+      document.getElementById("numWithClip3").innerHTML="חרוזים עם קליפ 3 שנשארו בהגרלה: "+allRowsWithClip3.length+" (מתוך "+allRowsWithClip3total+")";
+      document.getElementById("numWithClip4").innerHTML="חרוזים עם קליפ 4 שנשארו בהגרלה: "+allRowsWithClip4.length+" (מתוך "+allRowsWithClip4total+")";
+      document.getElementById("numWithClip5").innerHTML="חרוזים עם קליפ 5 שנשארו בהגרלה: "+allRowsWithClip5.length+" (מתוך "+allRowsWithClip5total+")";
+      document.getElementById("numWithClip6").innerHTML="חרוזים עם קליפ 6 שנשארו בהגרלה: "+allRowsWithClip6.length+" (מתוך "+allRowsWithClip6total+")";
        document.getElementById("numWithAll").innerHTML="חרוזים עם ID שנשארו בהגרלה: "+allRows.length+" (מתוך "+allRowsTotal+")";
       document.getElementById("numWithFull").innerHTML="חרוזים עם ראיון מלא שנשארו בהגרלה: "+allRowsWithFull.length+" (מתוך "+allRowsWithFullTotal+")";
-       document.getElementById("numWithClip2").innerHTML="חרוזים עם קליפ 2 שנשארו בהגרלה: "+allRowsWithClip2.length+" (מתוך "+allRowsWithClip2total+")";
       if(allRows.length<4||allRowsWithClip1
         .length<4||allRowsWithClip2
         .length<4||allRowsWithFull.length<4){
@@ -316,6 +439,26 @@ function cutMessReels(linesArr, messType,person) {
   }
   fullTexts[messType - 1] = currText;
 }    
+function getRandomClip(per){
+    var clipNum=Math.floor(Math.random() * per.clipsAmount) + 1;
+    console.log("clip num chosen:"+clipNum);
+    if(clipNum===2){
+        return per.clip2;
+    }
+    if(clipNum===3){
+        return per.clip3;
+    }
+    if(clipNum===4){
+        return per.clip4;
+    }
+    if(clipNum===5){
+        return per.clip5;
+    }
+    if(clipNum===6){
+        return per.clip6;
+    }
+    return per.clip1;
+}
 function cutMess(linesArr, messType,personNum) {
   var currText = "";
   var testDiv = document.getElementById("text" + messType);
@@ -347,11 +490,8 @@ function cutMess(linesArr, messType,personNum) {
     if (linesArr[i].includes("link55youtube")) {
       linesArr[i] = linesArr[i].replace("link55youtube", currPerson[personNum].link55yt);
     }
-    if (linesArr[i].includes("linkclip1")) {
-      linesArr[i] = linesArr[i].replace("linkclip1", currPerson[personNum].clip1);
-    }
-    if (linesArr[i].includes("linkclip2")) {
-      linesArr[i] = linesArr[i].replace("linkclip2", currPerson[personNum].clip2);
+    if (linesArr[i].includes("linkclip")) {
+      linesArr[i] = linesArr[i].replace("linkclip", getRandomClip(currPerson[personNum]));
     }
     if (linesArr[i] !== "") {
       if (linesArr[i + 1] !== "end") {
@@ -459,12 +599,12 @@ document.getElementById("meta").style.visibility = "hidden";
     while(num3===num1||num3===num2){
         num3=allRows[Math.floor(Math.random()*allRows.length)];
     }
-    var num4=allRowsWithClip2
-   [Math.floor(Math.random()*allRowsWithClip2
+    var num4=allRowsWithClip1
+   [Math.floor(Math.random()*allRowsWithClip1
                .length)];
     while(num4===num3||num4===num2||num4===num1){
-        num4=allRowsWithClip2
-       [Math.floor(Math.random()*allRowsWithClip2
+        num4=allRowsWithClip1
+       [Math.floor(Math.random()*allRowsWithClip1
                    .length)]
     }
     var pickedRows=[num1,num2,num3,num4];
@@ -686,8 +826,10 @@ function copy(id) {
   elem.select();
   document.execCommand("copy");
   document.body.removeChild(elem);
+    var prev=chosenRows[id-4].meta;
+    console.log(chosenRows[id-4]);
     const temp = {
-                     text: (date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear(),
+                     text: prev+""+(date.getMonth()+1)+"/"+date.getDate()+"/"+date.getFullYear()+", ",
                      row: chosenRows[id-4].row,
                      col: "meta",
                  };
