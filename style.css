@@ -16,6 +16,12 @@
 #displaying {
   visibility: hidden;
 }
+#post {
+  visibility: hidden;
+}
+#newChain {
+  visibility: hidden;
+}
 body {
   direction: rtl;
   text-align: center;
