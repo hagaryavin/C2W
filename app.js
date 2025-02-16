@@ -155,9 +155,9 @@ function getData() {
           }    
           console.log(newPerson);
           allPeople.push(newPerson);
-        }
-        if (newPerson.nextrecdate !== "") {
-          newPerson.clip1senddate = changeTimeZone(new Date(clip1sendDate(newPerson.nextrecdate)), 'Asia/Jerusalem');
+        
+      //  if (newPerson.nextrecdate !== "") {
+          newPerson.clip1senddate = changeTimeZone(new Date(clip1sendDate(newPerson.recordingdate)), 'Asia/Jerusalem');
           day = newPerson.recordingdate.getDate();
           month = newPerson.recordingdate.getMonth() + 1;
           recDate = day + "." + month;
@@ -189,11 +189,21 @@ function getData() {
               changeStatus(newPerson.row, newTask.type, "add");
             }
           }
+        newPerson.clip1removeDate = changeTimeZone(new Date(clip1removeDate(newPerson.recordingdate)), 'Asia/Jerusalem');
+
+         if (
+            (newPerson.clip1removeDate < today ||
+              (newPerson.clip1removeDate.getDate() === today.getDate() &&
+                newPerson.clip1removeDate.getMonth() === today.getMonth() &&
+                newPerson.clip1removeDate.getYear() === today.getYear())) &&
+            getTasksDataFromPersonCont(newPerson.row, "clip1send") ===
+              "active"
+          ) {autoEndTask(newPerson.row,"clip1send");}
           console.log(newPerson);
           allPeople.push(newPerson);
-        }
-        if (newPerson.clip1sent !== "") {
-          newPerson.clip2senddate = changeTimeZone(new Date(clip2sendDate(newPerson.clip1sent)), 'Asia/Jerusalem');
+       // }
+       // if (newPerson.clip1sent !== "") {
+          newPerson.clip2senddate = changeTimeZone(new Date(clip2sendDate(newPerson.recordingdate)), 'Asia/Jerusalem');
           day = newPerson.recordingdate.getDate();
           month = newPerson.recordingdate.getMonth() + 1;
           recDate = day + "." + month;
@@ -224,11 +234,21 @@ function getData() {
               changeStatus(newPerson.row, newTask.type, "add");
             }
           }
+         newPerson.clip2removeDate = changeTimeZone(new Date(clip2removeDate(newPerson.recordingdate)), 'Asia/Jerusalem');
+
+         if (
+            (newPerson.clip2removeDate < today ||
+              (newPerson.clip2removeDate.getDate() === today.getDate() &&
+                newPerson.clip2removeDate.getMonth() === today.getMonth() &&
+                newPerson.clip2removeDate.getYear() === today.getYear())) &&
+            getTasksDataFromPersonCont(newPerson.row, "clip2send") ===
+              "active"
+          ) {autoEndTask(newPerson.row,"clip2send");}
           console.log(newPerson);
           allPeople.push(newPerson);
-        }
-        if (newPerson.clip2sent !== "") {
-          newPerson.clip3senddate = changeTimeZone(new Date(clip3sendDate(newPerson.clip2sent)), 'Asia/Jerusalem');
+       // }
+       // if (newPerson.clip2sent !== "") {
+          newPerson.clip3senddate = changeTimeZone(new Date(clip3sendDate(newPerson.recordingdate)), 'Asia/Jerusalem');
           day = newPerson.recordingdate.getDate();
           month = newPerson.recordingdate.getMonth() + 1;
           recDate = day + "." + month;
@@ -259,9 +279,20 @@ function getData() {
               changeStatus(newPerson.row, newTask.type, "add");
             }
           }
+            newPerson.clip3removeDate = changeTimeZone(new Date(clip3removeDate(newPerson.recordingdate)), 'Asia/Jerusalem');
+
+         if (
+            (newPerson.clip3removeDate < today ||
+              (newPerson.clip3removeDate.getDate() === today.getDate() &&
+                newPerson.clip3removeDate.getMonth() === today.getMonth() &&
+                newPerson.clip3removeDate.getYear() === today.getYear())) &&
+            getTasksDataFromPersonCont(newPerson.row, "clip3send") ===
+              "active"
+          ) {autoEndTask(newPerson.row,"clip3send");}
           console.log(newPerson);
           allPeople.push(newPerson);
-        }    
+       // } 
+            }
       });
       taskData();
     });
@@ -500,7 +531,7 @@ function createTasks() {
     }
     if (allTasks[i].type === "clip2send") {
       ////////10
-      firstSendDay=allTasks[i].clip1date.getDate()+"."+(allTasks[i].clip1date.getMonth() + 1);
+      
       optionDiv = document.createElement("div");
       optionDiv.classList.add("d-inline-flex");
       optionDiv.classList.add("flex-row");
@@ -514,7 +545,15 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "clip2send" + allTasks[i].row;
-      optionList.innerHTML ="לשלוח פרגון + קליפ 2 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 1 נשלח - "+firstSendDay+" "+allTasks[i].feedback;
+    if(allTasks[i].clip1date!==""){
+        firstSendDay=allTasks[i].clip1date.getDate()+"."+(allTasks[i].clip1date.getMonth() + 1);
+        optionList.innerHTML ="לשלוח פרגון + קליפ 2 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 1 נשלח - "+firstSendDay+" "+allTasks[i].feedback;
+
+      }
+    if(allTasks[i].clip1date===""){
+        optionList.innerHTML ="לשלוח פרגון + קליפ 2 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+" "+allTasks[i].feedback;
+
+    }
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       listSend.append(optionDiv);
@@ -545,7 +584,7 @@ function createTasks() {
     }
     if (allTasks[i].type === "clip3send") {
       ////////12
-      secondSendDay=allTasks[i].clip2date.getDate()+"."+(allTasks[i].clip2date.getMonth() + 1);
+     
       optionDiv = document.createElement("div");
       optionDiv.classList.add("d-inline-flex");
       optionDiv.classList.add("flex-row");
@@ -559,7 +598,14 @@ function createTasks() {
       optionDiv.append(optionInput);
       optionList = document.createElement("label");
       optionList.id = "clip3send" + allTasks[i].row;
-      optionList.innerHTML ="לשלוח הדרכה + קליפ 3 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 2 נשלח - "+secondSendDay+" "+allTasks[i].feedback;
+         if(allTasks[i].clip2date!==""){
+        secondSendDay=allTasks[i].clip2date.getDate()+"."+(allTasks[i].clip2date.getMonth() + 1);
+        optionList.innerHTML ="לשלוח הדרכה + קליפ 3 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+ " - קליפ 2 נשלח - "+secondSendDay+" "+allTasks[i].feedback;
+      }
+    if(allTasks[i].clip2date===""){
+        optionList.innerHTML ="לשלוח הדרכה + קליפ 3 ל"+allTasks[i].name + " - " + recDate+" - "+chainName+" "+allTasks[i].feedback;
+    }
+      
       optionInput.classList.add("form-check-label");
       optionDiv.append(optionList);
       listSend.append(optionDiv);
@@ -738,7 +784,14 @@ function sendData2(obj, ele) {
     });
   
 }
-
+function autoEndTask(row,type){
+    changeStatus(row, type, "remove");
+    if(document.getElementById(type + "" + row)){
+    document.getElementById(type + "" + row).style.textDecoration =
+      "line-through";
+    }
+    console.log("type:" + type + " row:" + row + " checked");
+}
 function subsDate(date) {
     var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
     next.setDate(date.getDate() + 1);
@@ -753,7 +806,7 @@ function clipsCreateDate(date) {
 }
 function clip1sendDate(date) {
   var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
-  next.setDate(date.getDate() + 7);
+  next.setDate(date.getDate() + 21);
   if (next.getDay() === 6) {
     next.setDate(next.getDate() + 1);
   }
@@ -762,7 +815,7 @@ function clip1sendDate(date) {
 }
 function clip2sendDate(date) {
   var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
-  next.setDate(date.getDate() + 30);
+  next.setDate(date.getDate() + 28);
   if (next.getDay() === 6) {
     next.setDate(next.getDate() + 1);
   }
@@ -771,10 +824,28 @@ function clip2sendDate(date) {
 }
 function clip3sendDate(date) {
   var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
-  next.setDate(date.getDate() + 30);
+  next.setDate(date.getDate() + 35);
   if (next.getDay() === 6) {
     next.setDate(next.getDate() + 1);
   }
+  next.setHours(0, 0, 0);
+  return next;
+}
+function clip1removeDate(date) {
+  var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
+  next.setDate(date.getDate() + 35);
+  next.setHours(0, 0, 0);
+  return next;
+}
+function clip2removeDate(date) {
+  var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
+  next.setDate(date.getDate() + 42);
+  next.setHours(0, 0, 0);
+  return next;
+}
+function clip3removeDate(date) {
+  var next = changeTimeZone(new Date(date.getTime()), 'Asia/Jerusalem');
+  next.setDate(date.getDate() + 49);
   next.setHours(0, 0, 0);
   return next;
 }
